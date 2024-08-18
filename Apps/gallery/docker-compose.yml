@@ -1,5 +1,5 @@
 # Configuration for big-bear-immich setup
-name: gallery
+name: big-bear-immich
 
 # Service definitions for the big-bear-immich application
 services:
@@ -13,7 +13,7 @@ services:
     ports: # Mapping ports from the host OS to the container
       - 2283:3001
     volumes: # Mounting directories for persistent data storage
-      - /homelab/20 Media/29 Roll/:/usr/src/app/upload
+      - /DATA/AppData/$AppID/upload:/usr/src/app/upload
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
       DB_USERNAME: casaos
@@ -29,7 +29,7 @@ services:
 
     # Networks to be attached to the container
     networks:
-      - immich_network
+      - big_bear_immich_network
 
     x-casaos: # CasaOS specific configuration
       envs:
@@ -80,7 +80,7 @@ services:
 
     # Networks to be attached to the container
     networks:
-      - immich_network # Connects the container to a defined network
+      - big_bear_immich_network # Connects the container to a defined network
 
     x-casaos: # CasaOS specific configuration
       envs:
@@ -113,7 +113,7 @@ services:
     image: redis:6.2-alpine@sha256:70a7a5b641117670beae0d80658430853896b5ef269ccf00d1827427e3263fa3 # Image to be used
     restart: always # Policy to always restart the container if it stops
     networks:
-      - immich_network # Connects the container to a defined network
+      - big_bear_immich_network # Connects the container to a defined network
 
   # Configuration for Database service
   database:
@@ -130,7 +130,7 @@ services:
 
     # CasaOS specific configuration for the database service
     networks:
-      - immich_network # Connects the container to a defined network
+      - big_bear_immich_network # Connects the container to a defined network
 
     x-casaos: # CasaOS specific configuration
       envs:
@@ -172,7 +172,7 @@ x-casaos:
   thumbnail: ""
   # Title of the application in English
   title:
-    en_us: gallery
+    en_us: Gallery
   # Application category
   category: Media
   # Port mapping information
