@@ -1,15 +1,15 @@
 # Configuration for home-assistant setup
 
-# Name of the big-bear-home-assistant application
-name: big-bear-home-assistant
+# Name of the home-assistant application
+name: Smart Home
 
-# Service definitions for the big-bear-home-assistant application
+# Service definitions for the home-assistant application
 services:
   # Service name: app
   # The `app` service definition
   app:
     # Name of the container
-    container_name: big-bear-home-assistant
+    container_name: home-assistant
 
     # Image to be used for the container
     image: ghcr.io/home-assistant/home-assistant:2024.8.2
@@ -60,15 +60,15 @@ x-casaos:
   # Developer's name or identifier
   developer: "home-assistant"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: Servlabs
   # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/home-assistant.png
   # Thumbnail image (currently empty)
   thumbnail: ""
   title:
     # Title in English
-    en_us: Home Assistant
+    en_us: Smart Home
   # Application category
-  category: BigBearCasaOS
+  category: Automation
   # Port mapping information
   port_map: "8123"
