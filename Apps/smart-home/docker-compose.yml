@@ -1,7 +1,7 @@
 # Configuration for home-assistant setup
 
 # Name of the home-assistant application
-name: Smart Home
+name: smart-home
 
 # Service definitions for the home-assistant application
 services:
@@ -67,7 +67,7 @@ x-casaos:
   thumbnail: ""
   title:
     # Title in English
-    en_us: Smart Home
+    en_us: smart-home
   # Application category
   category: Automation
   # Port mapping information
