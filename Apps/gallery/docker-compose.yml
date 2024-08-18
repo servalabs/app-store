@@ -172,7 +172,7 @@ x-casaos:
   thumbnail: ""
   # Title of the application in English
   title:
-    en_us: Gallery
+    en_us: gallery
   # Application category
   category: Media
   # Port mapping information
