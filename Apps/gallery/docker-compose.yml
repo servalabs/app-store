@@ -1,5 +1,5 @@
 # Configuration for big-bear-immich setup
-name: Gallery
+name: gallery
 
 # Service definitions for the big-bear-immich application
 services:
