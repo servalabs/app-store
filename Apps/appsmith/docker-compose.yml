@@ -1,9 +1,9 @@
 # Configuration for appsmith setup
 
-# Name of the big-bear-appsmith application
-name: big-bear-appsmith
+# Name of the appsmith application
+name: appsmith
 
-# Service definitions for the big-bear-appsmith application
+# Service definitions for the appsmith application
 services:
   # Service name: app
   # The `app` service definition
@@ -46,7 +46,7 @@ x-casaos:
   # Developer's name or identifier
   developer: "appsmithorg"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: ServaLabs
   # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/appsmithorg/appsmith/static/logo.png
   # Thumbnail image (currently empty)
@@ -55,6 +55,6 @@ x-casaos:
     # Title in English
     en_us: Appsmith
   # Application category
-  category: BigBearCasaOS
+  category: Advanced
   # Port mapping information
   port_map: "1080"
