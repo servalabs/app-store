@@ -1,5 +1,5 @@
 # Configuration for immich setup
-name: immich
+name: gallery
 
 # Service definitions for the immich application
 services:
