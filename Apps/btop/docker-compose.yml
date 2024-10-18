@@ -1,7 +1,7 @@
 # Configuration for btop setup
 
 # Name of the big-bear-btop application
-name: big-bear-btop
+name: btop
 
 # Service definitions for the big-bear-btop application
 services:
@@ -9,7 +9,7 @@ services:
   # The `big-bear-btop` service definition
   big-bear-btop:
     # Name of the container
-    container_name: big-bear-btop
+    container_name: btop
 
     # Image to be used for the container specifies the btop version and source
     image: bigbeartechworld/big-bear-btop:0.0.8
@@ -60,18 +60,18 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  main: big-bear-btop
+  main: btop
   description:
     en_us: A monitor of resources. Software made by Aristocratos at https://github.com/aristocratos/btop
   tagline:
     en_us: A monitor of resources
-  developer: "bigbeartechworld"
-  author: BigBearTechWorld
+  developer: "ServaLabs"
+  author: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/aristocratos/btop/Img/icon.png
   thumbnail: ""
   title:
     en_us: btop
-  category: BigBearCasaOS
+  category: Monitoring
   port_map: "7681"
   # Tips
   tips:

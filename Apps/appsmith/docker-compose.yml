@@ -44,7 +44,7 @@ x-casaos:
     # Short description or tagline in English
     en_us: Appsmith
   # Developer's name or identifier
-  developer: "appsmithorg"
+  developer: "ServaLabs"
   # Author of this configuration
   author: ServaLabs
   # Icon for the application
