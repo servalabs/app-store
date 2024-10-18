@@ -1,15 +1,15 @@
 # Configuration for plant-it setup
 
-# Name of the big-bear-plant-it application
-name: big-bear-plant-it
+# Name of the plant-it application
+name: plant-it
 
-# Service definitions for the big-bear-plant-it application
+# Service definitions for the plant-it application
 services:
-  # Service name: big-bear-plant-it
-  # The `big-bear-plant-it` service definition
-  big-bear-plant-it:
+  # Service name: plant-it
+  # The `plant-it` service definition
+  plant-it:
     # Name of the container
-    container_name: big-bear-plant-it
+    container_name: plant-it
 
     # Image to be used for the container
     image: msdeluise/plant-it-server:0.8.0
@@ -19,7 +19,7 @@ services:
 
     environment:
       # MySQL database host
-      - MYSQL_HOST=big-bear-plant-it-db
+      - MYSQL_HOST=plant-it-db
       # MySQL database port
       - MYSQL_PORT=3306
       # MySQL database username
@@ -49,7 +49,7 @@ services:
       # Cache time-to-live (TTL) in seconds
       - CACHE_TTL=86400
       # Cache host
-      - CACHE_HOST=big-bear-plant-it-cache
+      - CACHE_HOST=plant-it-cache
       # Cache port
       - CACHE_PORT=6379
       # SSL enabled flag
@@ -73,7 +73,7 @@ services:
 
     networks:
       # Network definition
-      - big_bear_plant_it_network
+      - plant_it_network
 
     x-casaos: # CasaOS specific configuration
       volumes:
@@ -96,9 +96,9 @@ services:
             en_us: "Container Port: 3000"
 
   # Service definition for the database
-  big-bear-plant-it-db:
+  plant-it-db:
     # Name of the database container
-    container_name: big-bear-plant-it-db
+    container_name: plant-it-db
     # Image for the database
     image: mysql:8.0
     # Restart policy for the database container
@@ -116,7 +116,7 @@ services:
       - "/DATA/AppData/$AppID/mysql:/var/lib/mysql"
     networks:
       # Network definition
-      - big_bear_plant_it_network
+      - plant_it_network
     x-casaos:
       volumes:
         # Description for the MySQL data volume
@@ -130,16 +130,16 @@ services:
             en_us: "Container Port: 3306"
 
   # Service definition for the cache
-  big-bear-plant-it-cache:
+  plant-it-cache:
     # Name of the cache container
-    container_name: big-bear-plant-it-cache
+    container_name: plant-it-cache
     # Image for the cache
     image: redis:7.2.1
     # Restart policy for the cache container
     restart: always
     networks:
       # Network definition
-      - big_bear_plant_it_network
+      - plant_it_network
     x-casaos:
       volumes:
         # Description for the Redis data volume
@@ -155,7 +155,7 @@ services:
 # Network configuration
 networks:
   # Network definition
-  big_bear_plant_it_network:
+  plant_it_network:
     driver: bridge
 
 # CasaOS specific configuration
@@ -165,7 +165,7 @@ x-casaos:
     - amd64
     - arm64
   # Main service of the application
-  main: big-bear-plant-it
+  main: plant-it
   description:
     # Description in English
     en_us: Plant-it is a self-hosted gardening companion app. Useful for keeping track of plant care, receiving notifications about when to water plants, uploading plant images, and more.
@@ -173,9 +173,9 @@ x-casaos:
     # Short description or tagline in English
     en_us: Self-hosted, open source gardening companion app
   # Developer's name or identifier
-  developer: "msdeluise"
+  developer: "ServaLabs"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: ServaLabs
   # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos/Apps/plant-it/logo.png
   # Thumbnail image (currently empty)
@@ -184,7 +184,7 @@ x-casaos:
     # Title in English
     en_us: Plant-it
   # Application category
-  category: BigBearCasaOS
+  category: Home
   # Port mapping information
   port_map: "3000"
   # Tips for the application

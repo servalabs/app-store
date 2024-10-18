@@ -1,7 +1,7 @@
-# Configuration for big-bear-dashdot setup
+# Configuration for dashdot setup
 
-# Name of the big-bear-dashdot application
-name: big-bear-dashdot
+# Name of the dashdot application
+name: dashdot
 
 # Service definitions for the dashdot application
 services:
@@ -41,7 +41,7 @@ x-casaos:
   # Developer's name or identifier for the application
   developer: "mauricenino"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: ServaLabs
   # Icon URL for the application
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dashdot.png
   # Thumbnail image URL for the application (currently empty)
@@ -50,6 +50,6 @@ x-casaos:
   title:
     en_us: Dashdot
   # Application category
-  category: BigBearCasaOS
+  category: Monitoring
   # Port mapping information for the application
   port_map: "3001"

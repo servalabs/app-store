@@ -1,7 +1,7 @@
 # Configuration for budibase setup
 
 # Name of the big-bear-budibase application
-name: big-bear-budibase
+name: budibase
 
 # Service definitions for the big-bear-budibase application
 services:
@@ -9,7 +9,7 @@ services:
   # The `big-bear-budibase` service definition
   big-bear-budibase:
     # Name of the container
-    container_name: big-bear-budibase
+    container_name: budibase
 
     # Image to be used for the container
     image: budibase/budibase:2.32.17
@@ -43,7 +43,7 @@ x-casaos:
     - amd64
     - arm64
   # Main service of the application
-  main: big-bear-budibase
+  main: budibase
   description:
     # Description in English
     en_us: Low code platform for creating internal tools, workflows, and admin panels in minutes. Supports PostgreSQL, MySQL, MSSQL, MongoDB, Rest API, Docker, K8s, and more 🚀. Budibase, the low code platform you'll enjoy using ⚡
@@ -53,7 +53,7 @@ x-casaos:
   # Developer's name or identifier
   developer: "Budibase"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: ServaLabs
   # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/budibase.png
   # Thumbnail image (currently empty)
@@ -62,6 +62,6 @@ x-casaos:
     # Title in English
     en_us: Budibase
   # Application category
-  category: BigBearCasaOS
+  category: Advanced
   # Port mapping information
   port_map: "8080"

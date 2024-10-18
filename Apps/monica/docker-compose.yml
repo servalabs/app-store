@@ -1,15 +1,15 @@
 # Configuration for monica setup
 
-# Name of the big-bear-monica application
-name: big-bear-monica
+# Name of the monica application
+name: PRM 
 
-# Service definitions for the big-bear-monica application
+# Service definitions for the monica application
 services:
-  # Service name: big-bear-monica
-  # The `big-bear-monica` service definition
-  big-bear-monica:
+  # Service name: monica
+  # The `monica` service definition
+  monica:
     # Name of the container
-    container_name: big-bear-monica
+    container_name: monica
 
     # Image to be used for the container
     image: monica:4.1.2
@@ -19,7 +19,7 @@ services:
 
     environment:
       - APP_KEY=80356f7073c4f7834187b25a9d32cd2a
-      - DB_HOST=big-bear-monica-db
+      - DB_HOST=monica-db
       - DB_USERNAME=usermonica
       - DB_PASSWORD=passwordmonica
 
@@ -28,8 +28,8 @@ services:
 
     # Ports mapping between host and container
     ports:
-      # Mapping port 8080 of the host to port 80 of the container
-      - "8080:80"
+      # Mapping port 1001 of the host to port 80 of the container
+      - "1001:80"
 
     # Networks to be attached to the container
     networks:
@@ -46,9 +46,9 @@ services:
             en_us: "Container Port: 7575"
 
   # Database service for monica
-  big-bear-monica-db:
+  monica-db:
     image: mariadb:10.6.11
-    container_name: big-bear-monica-db
+    container_name: monica-db
     environment:
       - TZ=UTC
       - MARIADB_RANDOM_ROOT_PASSWORD=true
@@ -95,25 +95,25 @@ x-casaos:
     - amd64
     - arm64
   # Main service of the application
-  main: big-bear-monica
+  main: monica
   description:
     # Description in English
-    en_us: Monica is an open-source web application to organize and record your interactions with your loved ones. We call it a PRM, or Personal Relationship Management. Think of it as a CRM (a popular tool used by sales teams in the corporate world) for your friends or family.
+    en_us: This app is an open-source web application to organize and record your interactions with your loved ones. We call it a PRM, or Personal Relationship Management. Think of it as a CRM (a popular tool used by sales teams in the corporate world) for your friends or family.
   tagline:
     # Short description or tagline in English
     en_us: A Personal Relationship Management tool to help you document your social life.
   # Developer's name or identifier
-  developer: "monica"
+  developer: "ServaLabs"
   # Author of this configuration
-  author: BigBearTechWorld
+  author: ServaLabs
   # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/monica.png
   # Thumbnail image (currently empty)
   thumbnail: ""
   title:
     # Title in English
-    en_us: Monica
+    en_us: PRM
   # Application category
-  category: BigBearCasaOS
+  category: Personal
   # Port mapping information
-  port_map: "8080"
+  port_map: "1001"
