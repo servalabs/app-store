@@ -1,5 +1,5 @@
 {
-  "name": "big-bear-casaos",
+  "name": "app-store",
   "version": "1.0.0",
   "description": "",
   "main": "",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bigbeartechworld/big-bear-casaos.git"
+    "url": "git+https://github.com/servalabs/app-store.git"
   },
   "author": "",
   "license": "GNU General Public License v3.0",
   "bugs": {
-    "url": "https://github.com/bigbeartechworld/big-bear-casaos/issues"
+    "url": "https://github.com/servalabs/app-store/issues"
   },
-  "homepage": "https://github.com/bigbeartechworld/big-bear-casaos#readme",
+  "homepage": "https://github.com/servalabs/app-store#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",

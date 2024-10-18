@@ -11,7 +11,7 @@ type App = {
 const getAppsList = async () => {
   const apps: Record<string, App> = {};
   const res = await fetch(
-    "https://api.github.com/repos/bigbeartechworld/big-bear-casaos/contents/Apps"
+    "https://api.github.com/repos/servalabs/app-store/contents/Apps"
   );
 
   if (!res.ok) {
@@ -25,7 +25,7 @@ const getAppsList = async () => {
   for (const app of appNames) {
     if (app === "__tests__") continue;
 
-    const configUrl = `https://raw.githubusercontent.com/bigbeartechworld/big-bear-casaos/master/Apps/${app}/config.json`;
+    const configUrl = `https://raw.githubusercontent.com/servalabs/app-store/master/Apps/${app}/config.json`;
     const configRes = await fetch(configUrl);
 
     if (!configRes.ok) {
