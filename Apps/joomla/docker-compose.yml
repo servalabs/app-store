@@ -1,0 +1,56 @@
+name: joomla
+services:
+  app:
+    image: joomla:5.3-apache
+    environment:
+      JOOMLA_DB_HOST: joomladb
+      JOOMLA_DB_PASSWORD: casaos
+    depends_on:
+      - joomladb
+    x-casaos:
+      envs:
+        - container: JOOMLA_DB_HOST
+          description:
+            en_us: ''
+        - container: JOOMLA_DB_PASSWORD
+          description:
+            en_us: ''
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/www
+        target: /var/www/html
+  joomladb:
+    image: mysql:9.2.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: casaos
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/mysql
+        target: /var/lib/mysql
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: app
+  description:
+    en_us: Another free and open-source CMS
+  tagline:
+    en_us: Another Free And Open-source Cms
+  developer: ''
+  author: WisdomSky
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/joomla.png
+  thumbnail: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/joomla.png
+  tips:
+    before_install:
+      en_us: |
+        For database connection, select `MySQL` then on the `database host` field put `joomladb`, for `database user` put `root` and for `database password` put `casaos`
+  title:
+    en_us: Joomla
+  category: Coolstore
+  port_map: '80'
