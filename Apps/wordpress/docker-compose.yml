@@ -1,0 +1,115 @@
+# Configuration for big-bear-wordpress setup
+
+# Name of the big-bear-wordpress application
+name: big-bear-wordpress
+
+# Service definitions for the wordpress application
+services:
+  # Service definition for the main application
+  app:
+    # Docker image to use for the application
+    image: wordpress:6.7.2
+    # Port mapping for the application
+    ports:
+      - 8080:80
+    # Environment variables for the application
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: casaos
+      WORDPRESS_DB_PASSWORD: casaos
+      WORDPRESS_DB_NAME: wordpress
+    # Volume mapping for the application
+    volumes:
+      - /DATA/AppData/$AppID/html:/var/www/html
+    # Service dependencies for the application
+    depends_on:
+      - db
+    x-casaos: # CasaOS specific configuration
+      envs:
+        - container: WORDPRESS_DB_HOST
+          description:
+            en_us: Database host
+        - container: WORDPRESS_DB_USER
+          description:
+            en_us: Database user
+        - container: WORDPRESS_DB_PASSWORD
+          description:
+            en_us: Database password
+        - container: WORDPRESS_DB_NAME
+          description:
+            en_us: Database name
+      volumes:
+        - container: /var/www/html
+          description:
+            en_us: "Container Path: /var/www/html"
+      ports:
+        - container: "80"
+          description:
+            en_us: "Container Port: 80"
+
+  # Service definition for the database
+  db:
+    # Docker image to use for the database
+    image: mysql:5.7
+    # Environment variables for the database
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: casaos
+      MYSQL_PASSWORD: casaos
+      MYSQL_ROOT_PASSWORD: casaos
+    # Volume mapping for the database
+    volumes:
+      - /DATA/AppData/$AppID/mysql:/var/lib/mysql
+    x-casaos: # CasaOS specific configuration
+      envs:
+        - container: MYSQL_DATABASE
+          description:
+            en_us: Database name
+        - container: MYSQL_USER
+          description:
+            en_us: Database user
+        - container: MYSQL_PASSWORD
+          description:
+            en_us: Database password
+        - container: MYSQL_ROOT_PASSWORD
+          description:
+            en_us: Database root password
+      volumes:
+        - container: /var/lib/mysql
+          description:
+            en_us: "Container Path: /var/lib/mysql"
+      ports:
+        - container: "3306"
+          description:
+            en_us: "Container Port: 3306"
+
+# CasaOS specific configuration
+x-casaos:
+  # Supported CPU architectures for the application
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  # Main service of the application
+  main: app
+  # Detailed description of the application
+  description:
+    en_us: Initially started as a blogging tool in 2003, it has evolved into a highly flexible CMS that powers over 40% of the web (as of my last training data in 2022).
+  # Short description or tagline for the application
+  tagline:
+    en_us: WordPress
+  # Developer's name or identifier for the application
+  developer: "Automattic"
+  # Author of this configuration
+  author: BigBearTechWorld
+  # Icon URL for the application
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wordpress.png
+  # Thumbnail image URL for the application (currently empty)
+  thumbnail: ""
+  # Title for the application
+  title:
+    en_us: WordPress
+  # Application category
+  category: BigBearCasaOS
+  # Port mapping information for the application
+  port_map: "8080"

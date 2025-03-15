@@ -1,0 +1,60 @@
+name: linuxserver-smokeping
+services:
+  app:
+    image: linuxserver/smokeping:2.8.2
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      MASTER_URL: ''
+      SHARED_SECRET: ''
+      CACHE_DIR: ''
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: MASTER_URL
+          description:
+            en_us: Specify the master url to connect to. Used when in slave mode.
+        - container: SHARED_SECRET
+          description:
+            en_us: Specify the master shared secret for this host. Used when in slave mode.
+        - container: CACHE_DIR
+          description:
+            en_us: Specify the cache directory for this host. Used when in slave mode.
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/smokeping/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/smokeping/data
+        target: /data
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  description:
+    en_us: Smokeping keeps track of your network latency. For a full example of what this application is capable of visit UCDavis.
+  tagline:
+    en_us: Keeps track of your network latency. For a full example of what this application is capable of visit UCDavis.
+  developer: LinuxServer.io
+  author: WisdomSky
+  icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/smokeping-logo.png
+  thumbnail: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/smokeping-logo.png
+  title:
+    en_us: Smokeping
+  category: LinuxServer.io
+  port_map: '80'

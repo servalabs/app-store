@@ -1,0 +1,99 @@
+name: network-firewall
+services:
+  adguard-home:
+    cpu_shares: 90
+    command: []
+    container_name: network-firewall
+    deploy:
+      resources:
+        limits:
+          memory: 15756M
+        reservations:
+          memory: "67108864"
+    hostname: network-firewall
+    image: adguard/adguardhome:v0.107.55
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/icon.png
+    ports:
+      - target: 53
+        published: "531"
+        protocol: tcp
+      - target: 53
+        published: "531"
+        protocol: udp
+      - target: 3000
+        published: "3001"
+        protocol: tcp
+      - target: 853
+        published: "853"
+        protocol: tcp
+      - target: 784
+        published: "784"
+        protocol: udp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /lab/.apps/network-firewall/work
+        target: /opt/adguardhome/work
+      - type: bind
+        source: /lab/.apps/network-firewall/conf
+        target: /opt/adguardhome/conf
+    x-casaos:
+      ports:
+        - container: "53"
+          description:
+            en_us: ""
+        - container: "53"
+          description:
+            en_us: ""
+        - container: "3000"
+          description:
+            en_us: ""
+        - container: "853"
+          description:
+            en_us: ""
+        - container: "784"
+          description:
+            en_us: ""
+      volumes:
+        - container: /opt/adguardhome/work
+          description:
+            en_us: ""
+        - container: /opt/adguardhome/conf
+          description:
+            en_us: ""
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:
+    - amd64
+  author: ServaLabs
+  category: Network
+  description:
+    en_us: >
+      Network-Firewall is a powerful, self-hosted network-wide ad blocker and privacy protection tool that acts as a DNS-level filter for all devices on a network
+      It blocks ads, trackers, malicious domains, and unwanted content before they even reach client devices, improving security, reducing bandwidth usage, and enhancing browsing speed. With an intuitive web interface, customizable filtering rules, and detailed analytics, Network-Firewall provides fine-grained control over internet traffic, ensuring a cleaner and safer online experience across the entire network
+      It supports DNS-over-HTTPS (DoH) and DNS-over-TLS (DoT) for encrypted queries, making it an excellent alternative to third-party DNS services while maintaining full local control.
+  developer: ServaLabs
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/icon.png
+  index: /
+  is_uncontrolled: false
+  main: adguard-home
+  port_map: "3001"
+  scheme: http
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-3.png
+  store_app_id: network-firewall
+  tagline:
+    en_us: Blocking ads & tracking Network-widly
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/thumbnail.png
+  tips: {}
+  title:
+    custom: network-firewall
+    en_us: Network Firewall

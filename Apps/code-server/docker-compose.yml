@@ -1,0 +1,62 @@
+# Configuration for big-bear-code-server setup
+name: big-bear-code-server
+# Service definitions for the big-bear-code-server application
+services:
+  # Service name: app
+  app:
+    image: linuxserver/code-server:4.98.0 # The Docker image to be used for the service
+    container_name: code-server # Name of the container instance
+    environment:
+      - PUID=1000 # User ID under which code-server will run
+      - PGID=1000 # Group ID under which code-server will run
+      - TZ=UTC # Timezone for the container
+      - PASSWORD=my_password # Password to access code-server
+      - SUDO_PASSWORD=sudo_my_password # Password to access code-server
+      - DEFAULT_WORKSPACE=/config/workspace
+    volumes:
+      - /DATA/AppData/$AppID/config:/config #config dir
+      - /DATA/AppData/$AppID/projects:/projects #project dir
+    ports:
+      - "8080:8443" # Expose code-server's port 8080 on the host's port 8080
+    restart: always # Policy to restart the container if it stops unexpectedly
+    x-casaos: # CasaOS specific configuration
+      envs:
+        - container: PASSWORD
+          description:
+            en_us: "Password to access code-server"
+        - container: PUID
+          description:
+            en_us: "User ID under which code-server will run"
+        - container: PGID
+          description:
+            en_us: "Group ID under which code-server will run"
+      volumes:
+        - container: /config
+          description:
+            en_us: "config dir"
+        - container: /projects
+          description:
+            en_us: "project dir"
+      ports:
+        - container: "8080"
+          description:
+            en_us: "Container Port: 8080"
+
+# CasaOS specific configuration
+x-casaos:
+  architectures: # Supported CPU architectures
+    - amd64
+    - arm64
+  main: app # Main service of the application
+  description:
+    en_us: Run VS Code on any machine anywhere and access it in the browser. # Description in English
+  tagline:
+    en_us: Code Server # Short description or tagline in English
+  developer: "" # Developer's name or identifier
+  author: BigBearTechWorld # Author of this configuration
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/code-server.png # Icon for the application
+  thumbnail: "" # Thumbnail image (currently empty)
+  title:
+    en_us: Code Server # Title in English
+  category: BigBearCasaOS # Application category
+  port_map: "8080" # Port mapping information
