@@ -1,0 +1,46 @@
+name: linuxserver-zotero
+services:
+  app:
+    image: linuxserver/zotero:7.0.14
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+      - target: 3001
+        published: 3001
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/zotero/config
+        target: /config
+x-casaos:
+  architectures:
+    - amd64
+  main: app
+  description:
+    en_us: Zotero is a free, easy-to-use tool to help you collect, organize, annotate, cite, and share research.
+  tagline:
+    en_us: A free, easy-to-use tool to help you collect, organize, annotate, cite, and share research.
+  developer: LinuxServer.io
+  author: WisdomSky
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/zotero-icon.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/zotero-icon.png
+  title:
+    en_us: Zotero
+  category: LinuxServer.io
