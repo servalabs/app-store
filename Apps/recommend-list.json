@@ -1,0 +1,11 @@
+[
+    {
+      "app_id": "network-firewall",
+      "recommend": true
+    },
+    {
+      "app_id": "dashboard",
+      "recommend": false
+    }
+  ]
+  
