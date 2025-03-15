@@ -1,8 +1,0 @@
-{
-  "id": "ejbca-ce",
-  "version": "9.0.0",
-  "image": "keyfactor/ejbca-ce",
-  "youtube": "",
-  "docs_link": "https://doc.primekey.com/ejbca/ejbca-introduction",
-  "big_bear_cosmos_youtube": ""
-}
