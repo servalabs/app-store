@@ -1,44 +1,79 @@
-name: kavita
+# Configuration for kavita setup
+
+# Name of the big-bear-kavita application
+name: big-bear-kavita
+
+# Service definitions for the big-bear-kavita application
 services:
-  app:
+  # Service name: big-bear-kavita
+  # The `big-bear-kavita` service definition
+  big-bear-kavita:
+    # Name of the container
+    container_name: big-bear-kavita
+
+    # Image to be used for the container
     image: jvmilazz0/kavita:0.8.5
+
+    # Container restart policy
     restart: unless-stopped
-    environment:
-      PUID: $PUID
-      PGID: $PGID
-    x-casaos:
-      envs:
-        - container: PUID
-          description:
-            en_us: ''
-        - container: PGID
-          description:
-            en_us: ''
-    ports:
-      - target: 5000
-        published: 5000
-        protocol: tcp
+
+    # Volumes to be mounted to the container
     volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/manga
-        target: /manga
-      - type: bind
-        source: /DATA/AppData/$AppID/config
-        target: /kavita/config
+      - /DATA/AppData/$AppID/data/kavita-config:/kavita/config
+      - /DATA/AppData/$AppID/media/data/books:/books
+      - /DATA/AppData/$AppID/media/data/comics:/comics
+      - /DATA/AppData/$AppID/media/data/manga:/manga
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 5000 of the host to port 5000 of the container
+      - "5000:5000"
+
+    x-casaos: # CasaOS specific configuration
+      volumes:
+        - container: /kavita/config
+          description:
+            en_us: "Container Path: /kavita/config"
+        - container: /books
+          description:
+            en_us: "Container Path: /books"
+        - container: /comics
+          description:
+            en_us: "Container Path: /comics"
+        - container: /manga
+          description:
+            en_us: "Container Path: /manga"
+      ports:
+        - container: "5000"
+          description:
+            en_us: "Container Port: 5000"
+
+# CasaOS specific configuration
 x-casaos:
+  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm
     - arm64
-  main: app
+  # Main service of the application
+  main: big-bear-kavita
   description:
-    en_us: Kavita Manga, Comic and E-Book Server
+    # Description in English
+    en_us: Kavita is a fast, feature rich, cross platform reading server
   tagline:
-    en_us: Kavita Manga, Comic And E-book Server
-  developer: ''
-  author: WisdomSky
-  icon: https://raw.githubusercontent.com/Kareadita/Kavita/main/UI/Web/src/assets/images/logo.png
-  thumbnail: https://raw.githubusercontent.com/Kareadita/Kavita/main/UI/Web/src/assets/images/logo.png
-  title:
+    # Short description or tagline in English
     en_us: Kavita
-  category: Coolstore
+  # Developer's name or identifier
+  developer: "jvmilazz0"
+  # Author of this configuration
+  author: BigBearTechWorld
+  # Icon for the application
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kavita.png
+  # Thumbnail image (currently empty)
+  thumbnail: ""
+  title:
+    # Title in English
+    en_us: Kavita
+  # Application category
+  category: BigBearCasaOS
+  # Port mapping information
+  port_map: "5000"

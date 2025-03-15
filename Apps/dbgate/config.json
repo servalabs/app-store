@@ -1,0 +1,8 @@
+{
+  "id": "dbgate",
+  "version": "6.2.1-alpine",
+  "image": "dbgate/dbgate",
+  "youtube": "",
+  "docs_link": "",
+  "big_bear_cosmos_youtube": ""
+}

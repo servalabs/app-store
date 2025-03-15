@@ -1,44 +1,66 @@
-name: homebridge
+# Configuration for homebridge setup
+
+# Name of the big-bear-homebridge application
+name: big-bear-homebridge
+
+# Service definitions for the big-bear-homebridge application
 services:
-  app:
-    image: oznu/homebridge:2023-01-08
+  # Service name: big-bear-homebridge
+  # The `big-bear-homebridge` service definition
+  big-bear-homebridge:
+    # Name of the container
+    container_name: big-bear-homebridge
+
+    # Image to be used for the container
+    image: homebridge/homebridge:2024-05-02
+
+    # Container restart policy
     restart: unless-stopped
+
+    # Environment Variables
     environment:
-      PGID: $PGID
-      PUID: $PUID
-      ENABLE_AVAHI: 1
-      TZ: $TZ
+      - TZ=UTC # Timezone
+
+    privileged: true
+
     network_mode: host
-    x-casaos:
-      envs:
-        - container: PGID
-          description:
-            en_us: ''
-        - container: PUID
-          description:
-            en_us: ''
+
+    # Volumes HOST:CONTAINER
+    volumes:
+      - /DATA/AppData/$AppID/data:/homebridge
+
+    x-casaos: # CasaOS specific configuration
+      volumes:
         - container: TZ
           description:
-            en_us: ''
-    volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/config
-        target: /homebridge
+            en_us: "Container Path: TZ"
+
+# CasaOS specific configuration
 x-casaos:
+  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm
     - arm64
-  main: app
+  # Main service of the application
+  main: big-bear-homebridge
   description:
-    en_us: Homebridge allows you to integrate with smart home devices that do not natively support HomeKit. There are over 2,000 Homebridge plugins supporting thousands of different smart accessories.
+    # Description in English
+    en_us: HomeKit support for the impatient.
   tagline:
-    en_us: Homebridge Allows You To Integrate With Smart Home Devices That Do Not Natively Support Homekit. There Are Over 2,000 Homebridge Plugins Supporting Thousands Of Different Smart Accessories.
-  developer: ''
-  author: WisdomSky
-  icon: https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/homebridge.png
-  thumbnail: https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/images/homebridge.png
+    # Short description or tagline in English
+    en_us: HomeKit support for the impatient.
+  # Developer's name or identifier
+  developer: "homebridge"
+  # Author of this configuration
+  author: BigBearTechWorld
+  # Icon for the application
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homebridge.png
+  # Thumbnail image (currently empty)
+  thumbnail: ""
   title:
-    en_us: Homebridge
-  category: Coolstore
-  port_map: '8581'
+    # Title in English
+    en_us: HomeBridge
+  # Application category
+  category: BigBearCasaOS
+  # Port mapping information
+  port_map: "8581"
