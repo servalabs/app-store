@@ -1,11 +1,7 @@
 [
-    {
-      "name": "Network",
-      "description": "Apps that help manage or secure your network"
-    },
-    {
-      "name": "Dashboards",
-      "description": "Apps that provide an overview or control panel"
-    }
-  ]
-  
+  {
+    "name": "Coolstore",
+    "font": "snow",
+    "description": ""
+  }
+]
