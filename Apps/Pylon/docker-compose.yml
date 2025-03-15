@@ -1,0 +1,59 @@
+name: linuxserver-pylon
+services:
+  app:
+    image: linuxserver/pylon:2.10.0
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      GITURL: ''
+      PYUSER: ''
+      PYPASS: ''
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: GITURL
+          description:
+            en_us: Specify a git repo to checkout on first startup
+        - container: PYUSER
+          description:
+            en_us: Specify a basic auth user.
+        - container: PYPASS
+          description:
+            en_us: Specify a basic auth password.
+    ports:
+      - target: 3131
+        published: 3131
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pylon/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/pylon/code
+        target: /code
+x-casaos:
+  architectures:
+    - arm64
+    - amd64
+  main: app
+  description:
+    en_us: Pylon is a web based integrated development environment built with Node.js as a backend and with a supercharged JavaScript/HTML5 frontend, licensed under GPL version 3. This project originates from Cloud9 v2 project.
+  tagline:
+    en_us: A web based integrated development environment built with Node. Js as a backend and with a supercharged JavaScript/HTML5 frontend, licensed under GPL version 3. This project originates from Cloud9 v2 project.
+  developer: LinuxServer.io
+  author: WisdomSky
+  icon: https://raw.githubusercontent.com/pylonide/pylon/master/doc/screenshot02.png
+  thumbnail: https://raw.githubusercontent.com/pylonide/pylon/master/doc/screenshot02.png
+  title:
+    en_us: Pylon
+  category: LinuxServer.io
