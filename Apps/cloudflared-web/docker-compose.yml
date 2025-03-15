@@ -1,92 +1,65 @@
-# Configuration for cloudflared-web setup
-
-# Name of the big-bear-cloudflared-web application
-name: big-bear-cloudflared-web
-
-# Service definitions for the big-bear-cloudflared-web application
+name: cloudflared-web
 services:
-  # Service name: big-bear-cloudflared-web
-  # The `big-bear-cloudflared-web` service definition
-  big-bear-cloudflared-web:
-    # Name of the container
-    container_name: big-bear-cloudflared-web
-
-    # Image to be used for the container
+  cloudflared:
     image: wisdomsky/cloudflared-web:2025.2.1
-
-    # Container restart policy
     restart: unless-stopped
-
-    # Network mode
     network_mode: host
-
-    # Environment variables for the container
-    environment:
-      - WEBUI_PORT=14333
-      - EDGE_IP_VERSION=auto
-      - PROTOCOL=auto
-      - METRICS_ENABLE=false
-      - METRICS_PORT=60123
-      - BASIC_AUTH_USER=admin
-      - BASIC_AUTH_PASS=""
-
-    x-casaos: # CasaOS specific configuration
-      envs:
-        - container: WEBUI_PORT
+    x-casaos:
+      volumes:
+        - container: /config
           description:
-            en_us: "Web UI Port"
-        - container: EDGE_IP_VERSION
-          description:
-            en_us: "Edge IP Version"
-        - container: PROTOCOL
-          description:
-            en_us: "Protocol"
-        - container: METRICS_ENABLE
-          description:
-            en_us: "Metrics Enable"
-        - container: METRICS_PORT
-          description:
-            en_us: "Metrics Port"
-        - container: BASIC_AUTH_USER
-          description:
-            en_us: "Basic Auth User"
-        - container: BASIC_AUTH_PASS
+            en_us: Contains config file where cloudflare token is stored.
+            zh_cn: 包含配置文件，其中存储了 Cloudflare 令牌。
+            ar_sa: يحتوي على ملف تكوين حيث يتم تخزين رمز Cloudflare.
+            de_de: Enthält eine Konfigurationsdatei, in der das Cloudflare-Token gespeichert ist.
+            es_es: Contiene un archivo de configuración donde se almacena el token de Cloudflare.
+            fr_fr: Contient un fichier de configuration où est stocké le jeton Cloudflare.
+            hu_hu: Tartalmazza a konfigurációs fájlt, ahol a Cloudflare token van tárolva.
+            it_it: Contiene un file di configurazione in cui è memorizzato il token di Cloudflare.
+            ru_ru: Содержит файл конфигурации, в котором хранится токен Cloudflare.
+            pl_pl: Zawiera plik konfiguracyjny, w którym przechowywany jest token Cloudflare.
+            pt_br: Contém um arquivo de configuração onde o token do Cloudflare é armazenado.
       ports:
-        - container: "14333"
+        - container: '14333'
           description:
-            en_us: "Container Port: 14333"
-
-# CasaOS specific configuration
+            en_us: Token Setup WebUI
+            zh_cn: 令牌设置 WebUI
+            ar_sa: واجهة مستخدم إعداد الرمز
+            de_de: Token-Setup WebUI
+            es_es: Configuración de Token WebUI
+            fr_fr: Interface utilisateur de configuration du jeton
+            hu_hu: Token beállítás WebUI
+            it_it: Interfaccia utente di configurazione del token
+            ru_ru: Веб-интерфейс настройки токена
+            pl_pl: Interfejs użytkownika konfiguracji tokena
+            pt_br: Configuração do Token WebUI
+    ports:
+      - target: 14333
+        published: '14333'
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/cloudflared-web/config
+        target: /config
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
+    - arm
     - arm64
-  # Main service of the application
-  main: big-bear-cloudflared-web
+  main: cloudflared
   description:
-    # Description in English
-    en_us: Cloudflared-web is a docker image that packages both cloudflared cli and a simple Web UI to easily start or stop remotely-managed Cloudflare tunnel.
+    en_us: Cloudflared-web packages both Cloudflare tunnel and a simple web-based user interface for easy starting and stopping of cloudflare tunnel.
   tagline:
-    # Short description or tagline in English
-    en_us: Cloudflared Web
-  # Developer's name or identifier
-  developer: "wisdomsky"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cloudflare.png
-  # Thumbnail image (currently empty)
-  thumbnail: ""
+    en_us: Cloudflare tunnel with a simple web-based user interface.
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/cloudflared-web/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/cloudflared-web/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/cloudflared-web/screenshot-3.png
+  developer: Cloudflare Inc.
+  author: WisdomSky
+  icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/cloudflared-web/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/cloudflared-web/icon.png
+  category: Coolstore
   title:
-    # Title in English
-    en_us: Cloudflared Web
-  # Application category
-  category: BigBearCasaOS
-  # Port mapping information
-  port_map: "14333"
-  # Tips
-  tips:
-    before_install:
-      en_us: |
-        Read this before installing: https://community.bigbeartechworld.com/t/added-cloudflared-web-to-bigbearcasaos/2275?u=dragonfire1119
+    en_us: Cloudflared-web
+  port_map: '14333'
