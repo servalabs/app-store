@@ -1,67 +1,45 @@
 name: spot-dl
 services:
-    app:
-        cpu_shares: 90
-        command:
-            - web
-            - --host
-            - 0.0.0.0
-            - --port
-            - "8800"
-            - --web-use-output-dir
-        container_name: spotify-dl
-        deploy:
-            resources:
-                limits:
-                    memory: "16524509184"
-        devices:
-            - /dev/dri:/dev/dri
-        hostname: spotify-dl
-        image: spotdl/spotify-downloader:latest
-        labels:
-            icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
-        networks:
-            default: null
-        ports:
-            - target: 8800
-              published: "8800"
-              protocol: tcp
-        restart: unless-stopped
-        tty: true
-        volumes:
-            - type: bind
-              source: /lab/40 Entertainment/43 Music/Downloads
-              target: /music
-            - type: bind
-              source: /lab/Apps/Spotify-DL
-              target: /config
-networks:
-    default:
-        name: spot-dl_default
+  app:
+    image: spotdl/spotify-downloader:v4.2.10
+    restart: unless-stopped
+    ports:
+      - target: 8800
+        published: 8800
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+      - type: bind
+        source: /DATA/AppData/coolstore-spotdl/config
+        target: /config
+    command:
+      - web
+      - '--host'
+      - 0.0.0.0
+      - '--port'
+      - '8800'
+      - '--web-use-output-dir'
+    tty: true
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-    author: WisdomSky
-    category: Coolstore
-    description:
-        en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
-    developer: spotDL
-    hostname: ""
-    icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
-    index: /
-    is_uncontrolled: false
-    main: app
-    port_map: "8800"
-    scheme: http
-    store_app_id: spot-dl
-    tagline:
-        en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
-    thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
-    tips:
-        before_install:
-            en_us: |
-                The default download location is set to `/DATA/Media/Music`. You can change this by going into the app settings and changing the specified path.
-    title:
-        custom: ""
-        en_us: Spotify Downloader
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  description:
+    en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
+  tagline:
+    en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
+  developer: spotDL
+  author: WisdomSky
+  icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
+  title:
+    en_us: spotDL
+  tips:
+    before_install:
+      en_us: |
+        The default download location is set to `/DATA/Media/Music`. You can change this by going into the app settings and changing the specified path.
+  category: Coolstore
+  port_map: '8800'

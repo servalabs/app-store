@@ -1,104 +1,55 @@
 name: casaos-toolbox
 services:
-    app:
-        cpu_shares: 90
-        command: []
-        container_name: toolbox
-        deploy:
-            resources:
-                limits:
-                    memory: "16524509184"
-        environment:
-            DB_DATABASE: casaos
-            DB_HOST: 0.0.0.0
-            DB_PASSWORD: casaos
-            DB_PORT: "33066"
-            DB_USERNAME: casaos
-            FORCE_HTTPS: "false"
-            WEBUI_PORT: "8088"
-        hostname: toolbox
-        image: wisdomsky/casaos-toolbox:0.2
-        labels:
-            icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
-        network_mode: host
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /usr/bin/casaos-cli
-              target: /usr/bin/casaos-cli
-              bind:
-                create_host_path: true
-            - type: bind
-              source: /etc/casaos/gateway.ini
-              target: /casaos/gateway.ini
-              bind:
-                create_host_path: true
-            - type: bind
-              source: /var/lib/casaos/apps
-              target: /casaos/apps
-              bind:
-                create_host_path: true
-            - type: bind
-              source: /var/lib/casaos/www
-              target: /casaos/www
-              bind:
-                create_host_path: true
-    db:
-        cpu_shares: 90
-        command: []
-        deploy:
-            resources:
-                limits:
-                    memory: "16524509184"
-        environment:
-            MYSQL_DATABASE: casaos
-            MYSQL_PASSWORD: casaos
-            MYSQL_ROOT_PASSWORD: casaos
-            MYSQL_USER: casaos
-        image: mariadb:11.7.2
-        labels:
-            icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
-        networks:
-            default: null
-        ports:
-            - target: 3306
-              published: "33066"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /lab/Apps/Toolbox/mysql
-              target: /var/lib/mysql
-              bind:
-                create_host_path: true
-networks:
-    default:
-        name: casaos-toolbox_default
+  app:
+    image: wisdomsky/casaos-toolbox:0.2
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      FORCE_HTTPS: false
+      WEBUI_PORT: 8088
+      DB_HOST: 0.0.0.0
+      DB_PORT: 33066
+      DB_DATABASE: casaos
+      DB_USERNAME: casaos
+      DB_PASSWORD: casaos
+    volumes:
+      - /usr/bin/casaos-cli:/usr/bin/casaos-cli
+      - /etc/casaos/gateway.ini:/casaos/gateway.ini
+      - /var/lib/casaos/apps:/casaos/apps
+      - /var/lib/casaos/www:/casaos/www
+  db:
+    image: mariadb:11.7.2
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: casaos
+      MYSQL_DATABASE: casaos
+      MYSQL_USER: casaos
+      MYSQL_PASSWORD: casaos
+    ports:
+      - target: 3306
+        published: '33066'
+        protocol: tcp
+    volumes:
+      - /DATA/AppData/casaos-toolbox/mysql:/var/lib/mysql
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    author: WisdomSky
-    category: Coolstore
-    description:
-        en_us: CasaOS Toolbox is an extension application that provides additional features to CasaOS.
-    developer: WisdomSky
-    hostname: ""
-    icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
-    index: /
-    is_uncontrolled: false
-    main: app
-    port_map: "8088"
-    scheme: http
-    screenshot_link:
-        - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-3.png
-    store_app_id: casaos-toolbox
-    tagline:
-        en_us: Provides additional features to CasaOS.
-    thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
-    title:
-        custom: Toolbox
-        en_us: CasaOS Toolbox
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: app
+  description:
+    en_us: CasaOS Toolbox is an extension application that provides additional features to CasaOS.
+  tagline:
+    en_us: Provides additional features to CasaOS.
+  developer: WisdomSky
+  author: WisdomSky
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-3.png
+  icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
+  category: Coolstore
+  title:
+    en_us: CasaOS Toolbox
+  port_map: '8088'
