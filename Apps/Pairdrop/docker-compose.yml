@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       RATE_LIMIT: ''
       WS_FALLBACK: ''
       RTC_CONFIG: ''
@@ -40,21 +40,22 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/pairdrop/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: PairDrop is a sublime alternative to AirDrop that works on all platforms. Send images, documents or text via peer to peer connection to devices in the same local network/Wi-Fi or to paired devices.
+    en_us: |
+      File-Sender allows seamless and secure peer-to-peer file sharing across local networks or paired devices, regardless of platform. It is a sleek, self-hosted alternative to AirDrop, requiring no registration or external server. Share documents, images, or notes quickly with full privacy control.
   tagline:
-    en_us: A sublime alternative to AirDrop that works on all platforms. Send images, documents or text via peer to peer connection to devices in the same local network/Wi-Fi or to paired devices.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Peer-to-peer file sharing for all platforms.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png
   thumbnail: https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png
   title:
-    en_us: Pairdrop
+    en_us: File-Sender
   category: LinuxServer.io
+  port_map: "3000"
