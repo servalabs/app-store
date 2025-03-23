@@ -1,23 +1,9 @@
-# Configuration for semaphore setup
-
-# Name of the big-bear-semaphore application
 name: big-bear-semaphore
-
-# Service definitions for the big-bear-semaphore application
 services:
-  # Service name: big-bear-semaphore
-  # The `big-bear-semaphore` service definition
   big-bear-semaphore:
-    # Name of the container
     container_name: big-bear-semaphore
-
-    # Image to be used for the container
     image: semaphoreui/semaphore:v2.13.0
-
-    # Container restart policy
     restart: unless-stopped
-
-    # Environment variables for configuration
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
@@ -29,21 +15,15 @@ services:
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@example.com
       SEMAPHORE_ADMIN: admin
-      TZ: UTC
-
-    # Volumes to be mounted to the container
+      TZ: Asia/Kolkata
     volumes:
-      - /DATA/AppData/$AppID/home:/etc/semaphore # Configuration files for Semaphore
-      - /DATA/AppData/$AppID/lib:/var/lib/semaphore # Local storage for Semaphore data (not needed if using an external database)
-
-    # Ports mapping between host and container
+      - /files/.apps/$AppID/home:/etc/semaphore
+      - /files/.apps/$AppID/lib:/var/lib/semaphore
     ports:
-      - "3000:3000" # Expose port 3000 for web access
-
+      - "3000:3000"
     networks:
       - big-bear-semaphore-network
-
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       volumes:
         - container: /etc/semaphore
           description:
@@ -55,24 +35,20 @@ services:
         - container: "3000"
           description:
             en_us: "Container Port: 3000"
-
-  # MySQL database service for semaphore
   big-bear-semaphore-db:
     container_name: big-bear-semaphore-db
     image: mysql:8.0
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/$AppID/mysql:/var/lib/mysql # Data directory for MySQL
+      - /files/.apps/$AppID/mysql:/var/lib/mysql
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes" # Generate a random root password
-      MYSQL_DATABASE: "semaphore" # Database name to create
-      MYSQL_USER: "semaphore" # Database user
-      MYSQL_PASSWORD: "semaphore" # Database password
-
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "semaphore"
+      MYSQL_USER: "semaphore"
+      MYSQL_PASSWORD: "semaphore"
     networks:
       - big-bear-semaphore-network
-
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       volumes:
         - container: /var/lib/mysql
           description:
@@ -81,37 +57,23 @@ services:
         - container: "3306"
           description:
             en_us: "Container Port: 3306"
-
 networks:
   big-bear-semaphore-network:
-    driver: bridge # Specifies network driver type
-
-# CasaOS specific configuration
+    driver: bridge
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: big-bear-semaphore
-  description:
-    # Description in English
-    en_us: Ansible Semaphore is a modern UI for Ansible. It lets you easily run Ansible playbooks, get notifications about fails, control access to deployment system.
-  tagline:
-    # Short description or tagline in English
-    en_us: Ansible Semaphore
-  # Developer's name or identifier
-  developer: "semaphore"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
+  author: ServaLabs
+  developer: ServaLabs
+  category: BigBearCasaOS
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/semaphore.png
-  # Thumbnail image (currently empty)
   thumbnail: ""
   title:
-    # Title in English
-    en_us: Ansible Semaphore
-  # Application category
-  category: BigBearCasaOS
-  # Port mapping information
+    en_us: Automation UI
+  description:
+    en_us: |
+      Automation UI is a clean, user-friendly interface for managing Ansible playbooks and automation tasks. This self-hosted tool simplifies deployment workflows with access control and real-time failure alerts. Perfect for teams managing complex server infrastructures.
+  tagline:
+    en_us: Web UI for automation tasks
   port_map: "3000"

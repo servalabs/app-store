@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
     x-casaos:
       envs:
         - container: PUID
@@ -27,22 +27,24 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/snapdrop/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
-    - arm64
     - amd64
   main: app
   description:
-    en_us: Snapdrop A local file sharing in your browser. Inspired by Apple's Airdrop.
+    en_us: |
+      File Sharing provides seamless, instant file transfer across devices via a browser-based interface.
+      Inspired by Airdrop, it enables local peer-to-peer sharing without any account or setup. It's fast, secure, and doesn't rely on internet connectivity.
+      Perfect for quickly exchanging photos, documents, or other files between laptops, phones, and tablets.
   tagline:
-    en_us: A local file sharing in your browser. Inspired by Apple's Airdrop.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Simple, local file sharing via your browser.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/snapdrop/snapdrop/master/client/images/logo_transparent_512x512.png
   thumbnail: https://raw.githubusercontent.com/snapdrop/snapdrop/master/client/images/logo_transparent_512x512.png
   title:
-    en_us: Snapdrop
+    en_us: File Sharing
   category: LinuxServer.io
-  port_map: '80'
+  port_map: "80"

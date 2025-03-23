@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
     x-casaos:
       envs:
         - container: PUID
@@ -27,21 +27,24 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/spotube/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Spotube is an open source, cross-platform Spotify client compatible across multiple platforms utilizing Spotify's data API and YouTube, Piped.video or JioSaavn as an audio source, eliminating the need for Spotify Premium
+    en_us: |
+      Music-Streamer is a lightweight, privacy-focused music streaming client that interfaces with Spotify’s API and uses alternative sources like YouTube or Piped to stream content. 
+      It supports cross-platform usage and works without the need for a Spotify Premium account. 
+      The interface is intuitive and responsive, making it easy to enjoy music anywhere while staying in control of your data.
   tagline:
-    en_us: An open source, cross-platform Spotify client compatible across multiple platforms utilizing Spotify's data API and YouTube, Piped. Video or JioSaavn as an audio source, eliminating the need for Spotify Premium
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: A privacy-friendly music streaming client that doesn't require Spotify Premium.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/spotube-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/spotube-logo.png
   title:
-    en_us: Spotube
+    en_us: Music Streamer
   category: LinuxServer.io
+  port_map: "3000"
