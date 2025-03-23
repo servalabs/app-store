@@ -11,7 +11,7 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        source: /files/.apps/$AppID/mysql
         target: /var/lib/mysql
     networks:
       - nextcloud
@@ -21,12 +21,12 @@ services:
     image: redis:6-alpine
     container_name: nextcloud-redis
     environment:
-      - TZ=Europe/Paris
+      - TZ=Asia/Kolkata
     restart: always
     networks:
       - nextcloud
     privileged: false
-  
+
   msmtpd:
     image: crazymax/msmtpd:latest
     container_name: nextcloud-msmtpd
@@ -40,7 +40,7 @@ services:
       - SMTP_TLS=on
       - SMTP_TLS_CHECKCERT=on
       - SMTP_USER=foo
-      - TZ=Europe/Paris
+      - TZ=Asia/Kolkata
       - HSTS_HEADER=max-age=15768000; includeSubDomains
       - LOG_IP_VAR=remote_addr
       - MEMORY_LIMIT=512M
@@ -62,7 +62,7 @@ services:
       - msmtpd
       - redis
     environment:
-      - TZ=$TZ
+      - TZ=Asia/Kolkata
       - PGID=$PGID
       - PUID=$PUID
       - APC_SHM_SIZE=128M
@@ -86,15 +86,15 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/data
+        source: /files/.apps/$AppID/data
         target: /data
     networks:
       - nextcloud
     privileged: false
-  
+
   cron:
     image: crazymax/nextcloud:latest
     container_name: nextcloud-cron
@@ -103,7 +103,7 @@ services:
     environment:
       - CRON_PERIOD=*/5 * * * *
       - SIDECAR_CRON=1
-      - TZ=Europe/Paris
+      - TZ=Asia/Kolkata
       - HSTS_HEADER=max-age=15768000; includeSubDomains
       - LOG_IP_VAR=remote_addr
       - MEMORY_LIMIT=512M
@@ -115,12 +115,12 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/data
+        source: /files/.apps/$AppID/data
         target: /data
     networks:
       - nextcloud
     privileged: false
-  
+
   previewgen:
     image: crazymax/nextcloud:latest
     container_name: nextcloud-previewgen
@@ -129,7 +129,7 @@ services:
     environment:
       - PREVIEWGEN_PERIOD=0 * * * *
       - SIDECAR_PREVIEWGEN=1
-      - TZ=Europe/Paris
+      - TZ=Asia/Kolkata
       - HSTS_HEADER=max-age=15768000; includeSubDomains
       - LOG_IP_VAR=remote_addr
       - MEMORY_LIMIT=512M
@@ -141,7 +141,7 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        source: /files/.apps/$AppID/mysql
         target: /var/lib/mysql
     networks:
       - nextcloud
@@ -158,7 +158,7 @@ services:
       - NC_NEWSUPDATER_THREADS=10
       - NC_NEWSUPDATER_TIMEOUT=300
       - SIDECAR_NEWSUPDATER=1
-      - TZ=Europe/Paris
+      - TZ=Asia/Kolkata
       - HSTS_HEADER=max-age=15768000; includeSubDomains
       - LOG_IP_VAR=remote_addr
       - MEMORY_LIMIT=512M
@@ -170,7 +170,7 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        source: /files/.apps/$AppID/mysql
         target: /var/lib/mysql
     networks:
       - nextcloud
@@ -179,20 +179,19 @@ services:
 networks:
   nextcloud:
     name: nextcloud
-    
+
 x-casaos:
   architectures:
     - amd64
-    - arm
-    - arm64
   main: nextcloud
-  author: crazy-max
+  author: ServaLabs
+  developer: ServaLabs
   category: TMCstore
   description: 
     en_us: |
-      Nextcloud Docker image with advanced features. More info can be found here https://github.com/crazy-max/docker-nextcloud.
+      Private Cloud is a comprehensive, self-hosted collaboration platform. It includes file storage, calendar, contacts, and more—fully under your control. Easily manage your digital life or business with this private cloud solution that combines convenience, security, and extensibility. Ideal for teams and individuals seeking privacy-focused productivity tools.
   tagline:
-    en_us: The productivity platform that keeps you in control.
+    en_us: Self-hosted collaboration and cloud storage suite.
   icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/icon.png
   index: /
   port_map: ${WEBUI_PORT:-8000}
@@ -203,7 +202,7 @@ x-casaos:
       https://github.com/mariosemes/CasaOS-TMCstore/tree/main/Apps/nextcloud
   store_app_id: nextcloud-tmc
   title:
-    en_us: Nextcloud (Extended)
+    en_us: Private Cloud
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/screenshot-01.png
     - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/screenshot-02.png

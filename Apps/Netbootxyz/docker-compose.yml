@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       MENU_VERSION: ''
       PORT_RANGE: ''
       SUBFOLDER: ''
@@ -50,25 +50,27 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/netbootxyz/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/netbootxyz/assets
+        source: /files/.apps/.assets
         target: /assets
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Netbootxyz is a way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool. iPXE is used to provide a user friendly menu from within the BIOS that lets you easily choose the operating system you want along with any specific types of versions or bootable flags.
+    en_us: |
+      Net Boot enables you to network boot operating systems and utilities from a centralized environment. 
+      It leverages iPXE to deliver a BIOS-accessible menu, making OS selection and booting seamless and media-free. 
+      Useful for system recovery, deployments, or live environments, it's ideal for managing boot workflows across machines.
   tagline:
-    en_us: A way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool. IPXE is used to provide a user friendly menu from within the BIOS that lets you easily choose the operating system you want along with any specific types of versions or bootable flags.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Seamlessly boot operating systems and tools over the network without needing boot media.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://netboot.xyz/images/netboot.xyz.gif
   thumbnail: https://netboot.xyz/images/netboot.xyz.gif
   title:
-    en_us: Netbootxyz
+    en_us: Net Boot
   category: LinuxServer.io
   port_map: '8080'

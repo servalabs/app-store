@@ -1,20 +1,16 @@
-# Configuration for big-bear-n8n setup
 name: big-bear-n8n
-# Service definitions for the big-bear-n8n application
 services:
-  # Service configuration for the n8n application
   app:
-    container_name: n8n # Name of the n8n container
-    image: n8nio/n8n:1.84.1 # Docker image and version to use for n8n
-    restart: unless-stopped # Restart policy: Restart unless manually stopped
+    container_name: n8n
+    image: n8nio/n8n:1.84.1
+    restart: unless-stopped
     ports:
-      - 5678:5678 # Port mapping between host and container
+      - 5678:5678
     links:
-      - db-n8n # Link to the database container
+      - db-n8n
     volumes:
-      - /DATA/AppData/$AppID/.n8n:/home/node/.n8n # Volume for persistent data
+      - /files/.apps/$AppID/n8n:/home/node/.n8n
     environment:
-      # Database configuration environment variables
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_DATABASE=n8n
       - DB_POSTGRESDB_HOST=db-n8n
@@ -23,47 +19,38 @@ services:
       - DB_POSTGRESDB_PASSWORD=bigbearcasaos
     depends_on:
       db-n8n:
-        condition: service_healthy # Ensure DB is healthy before starting app
-    x-casaos: # CasaOS specific configuration
+        condition: service_healthy
+    x-casaos:
       envs:
-        # Environment variables for CasaOS UI
         - container: DB_TYPE
           description:
             en_us: "Database type: postgresdb"
-        # More environment variable descriptions...
       volumes:
-        # Volume mapping descriptions for CasaOS UI
         - container: /home/node/.n8n
           description:
             en_us: "Container Path: /home/node/.n8n"
       ports:
-        # Port configuration descriptions for CasaOS UI
         - container: "5678"
           description:
             en_us: "Container Port: 5678"
-
-  # Database service configuration
   db-n8n:
-    container_name: db-n8n # Name of the database container
-    image: postgres:14.2 # Docker image and version for PostgreSQL
-    restart: on-failure # Restart policy: Restart on failure
+    container_name: db-n8n
+    image: postgres:14.2
+    restart: on-failure
     volumes:
-      - /DATA/AppData/$AppID/pgdata:/var/lib/postgresql/data # Persistent DB data
-      - /DATA/AppData/$AppID/db/init-data.sh:/docker-entrypoint-initdb.d/init-data.sh # DB initialization script
+      - /files/.apps/$AppID/pgdata:/var/lib/postgresql/data
+      - /files/.apps/$AppID/init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
     environment:
-      # PostgreSQL user, password, and database environment variables
       - POSTGRES_PASSWORD=bigbearcasaos
       - POSTGRES_USER=bigbearcasaos
       - POSTGRES_DB=n8n
     healthcheck:
-      # Health check commands to ensure DB availability
       test: ["CMD-SHELL", "pg_isready -h localhost -U bigbearcasaos -d n8n"]
       interval: 5s
       timeout: 5s
       retries: 10
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       envs:
-        # Environment variables for CasaOS UI
         - container: POSTGRES_PASSWORD
           description:
             en_us: "Database password: bigbearcasaos"
@@ -73,34 +60,29 @@ services:
         - container: POSTGRES_DB
           description:
             en_us: "Database type: postgresdb"
-        # More environment variable descriptions...
       volumes:
-        # Volume mapping descriptions for CasaOS UI
         - container: /var/lib/postgresql/data
           description:
             en_us: "Container Path: /var/lib/postgresql/data"
         - container: /docker-entrypoint-initdb.d/init-data.sh
           description:
             en_us: "Container Path: /docker-entrypoint-initdb.d/init-data.sh"
-
-# CasaOS specific top-level configuration
 x-casaos:
-  architectures: # Supported CPU architectures
+  architectures:
     - amd64
-    - arm64
-  main: app # Main service of the application
+  main: app
   description:
-    en_us: Free and open fair-code licensed node based Workflow Automation Tool. # Description in English
+    en_us: Workflow Automation is a modern, self-hosted platform to automate tasks, integrate services, and orchestrate processes with no-code/low-code logic. Ideal for business operations and productivity flows, it supports webhooks, scheduling, and third-party APIs with a visual interface.
   tagline:
-    en_us: Workflow automation tool # Short description or tagline in English
-  developer: "n8n" # Developer's name or identifier
-  author: BigBearTechWorld # Author of this configuration
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/n8n.png # Icon URL
-  thumbnail: "" # Thumbnail image URL (empty if not available)
+    en_us: Self-hosted no-code workflow automation
+  developer: ServaLabs
+  author: ServaLabs
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/n8n.png
+  thumbnail: ""
   title:
-    en_us: n8n # Title in English
-  category: BigBearCasaOS # Application category
-  port_map: "5678" # Port mapping information
+    en_us: Workflow Automation
+  category: BigBearCasaOS
+  port_map: "5678"
   tips:
     before_install:
       en_us: |
