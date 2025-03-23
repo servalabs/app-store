@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
     x-casaos:
       envs:
         - container: PUID
@@ -33,27 +33,29 @@ services:
         protocol: udp
     volumes:
       - type: bind
-        source: /DATA/AppData/syncthing/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/syncthing/data1
+        source: /files/.apps/$AppID/data1
         target: /data1
       - type: bind
-        source: /DATA/AppData/syncthing/data2
+        source: /files/.apps/$AppID/data2
         target: /data2
+    container_name: app
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.
+    en_us: |
+      File Sync is a decentralized synchronization tool for files across devices. It ensures your data remains private, secure, and always available without relying on third-party cloud providers. Ideal for seamless and automatic sync between desktops, servers, and mobile devices. This self-hosted solution supports encrypted connections, version control, and granular sharing.
   tagline:
-    en_us: Replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Decentralized, secure, and automatic file synchronization across your devices.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png
   title:
-    en_us: Syncthing
+    en_us: File Sync
   category: LinuxServer.io
+  port_map: "8384"
