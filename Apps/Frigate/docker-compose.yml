@@ -1,5 +1,3 @@
-# https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/CONTRIBUTING.md
-
 name: frigate
 services:
   frigate:
@@ -33,7 +31,7 @@ services:
           fi
         fi
         /init'
-    privileged: true # this may not be necessary for all setups
+    privileged: true
     image: ghcr.io/blakeblackshear/frigate:stable
     labels:
       icon: https://raw.githubusercontent.com/mr-manuel/CasaOS-HomeAutomation-AppStore/latest/Apps/Frigate/icon.png
@@ -57,26 +55,22 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    shm_size: "64mb" # update for your cameras based on calculation
+    shm_size: "64mb"
     devices:
-      - /dev/bus/usb:/dev/bus/usb  # passes the USB Coral, needs to be modified for other versions
-      - /dev/apex_0:/dev/apex_0  # passes a PCIe Coral, follow driver instructions here https://coral.ai/docs/m2/get-started/#2a-on-linux
-      - /dev/dri/renderD128  # for intel hwaccel, needs to be updated for your hardware
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/apex_0:/dev/apex_0
+      - /dev/dri/renderD128
     volumes:
       - type: bind
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
       - type: bind
-        source: /DATA/AppData/$AppID/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/$AppID/media
+        source: /files/.apps/$AppID/media
         target: /media/frigate
-#      - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
-#        target: /tmp/cache
-#        tmpfs:
-#          size: 1G
     x-casaos:
       ports:
         - container: "5000"
@@ -98,27 +92,14 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm64
-    - arm
-  author: mr-manuel
+  author: ServaLabs
   category: Surveillance
   description:
     en_us: |
-      Use of a Google Coral Accelerator is optional, but highly recommended. The Coral will outperform even the best CPUs and can process 100+ FPS with very little overhead.
-
-      * Tight integration with Home Assistant via a custom component
-      * Designed to minimize resource use and maximize performance by only looking for objects when and where it is necessary
-      * Leverages multiprocessing heavily with an emphasis on realtime over processing every frame
-      * Uses a very low overhead motion detection to determine where to run object detection
-      * Object detection with TensorFlow runs in separate processes for maximum FPS
-      * Communicates over MQTT for easy integration into other systems
-      * Records video with retention settings based on detected objects
-      * 24/7 recording
-      * Re-streaming via RTSP to reduce the number of connections to your camera
-      * WebRTC & MSE support for low-latency live view
-
-      Visit [Frigate](https://frigate.video/) for more details. Check the [documentation](https://docs.frigate.video/) for further settings.
-  developer: Blake Blackshear
+      Camera Monitor provides powerful AI-based local video surveillance using motion detection and object recognition. Designed for real-time processing, it leverages hardware acceleration and supports Coral TPU for enhanced performance.
+      With integrated MQTT support, it easily connects with other systems like Home Assistant. The app enables 24/7 recording, intelligent event-based detection, and re-streaming via RTSP or WebRTC for low-latency live views.
+      It's a fully local solution prioritizing performance, privacy, and integration flexibility.
+  developer: ServaLabs
   icon: https://raw.githubusercontent.com/mr-manuel/CasaOS-HomeAutomation-AppStore/latest/Apps/Frigate/icon.png
   index: /
   main: frigate
@@ -135,13 +116,11 @@ x-casaos:
   store_app_id: frigate
   tagline:
     en_us: |
-      A complete and local NVR designed for Home Assistant with AI object detection. Uses OpenCV and Tensorflow to perform realtime object detection locally for IP cameras.
+      A powerful local NVR with AI detection. Designed for real-time camera monitoring and seamless smart home integration.
   thumbnail: https://raw.githubusercontent.com/mr-manuel/CasaOS-HomeAutomation-AppStore/latest/Apps/Frigate/icon.png
   tips:
     before_install:
       en_us: |
-        Frigate will use ports `5000/tcp`, `8554/tcp`, `8555/tcp` and `8555/udp`. After installing further setup is needed.
-
-        [Website](https://frigate.video) &bull; [Documentation](https://docs.frigate.video/guides/getting_started)
+        This app uses ports `5000/tcp`, `8554/tcp`, `8555/tcp`, and `8555/udp`. Configure your cameras and detection rules after installation.
   title:
-    en_us: Frigate NVR
+    en_us: AI Surveillance

@@ -65,7 +65,6 @@ x-casaos:
     - amd64
   main: app
   description:
-    en_us: 
     en_us: SSH Honeypot simulates an SSH server and slowly sends an infinite banner to connecting clients. It helps deter brute-force attacks and distract unauthorized users by consuming their resources. Deploy it alongside your real SSH server on a different port for maximum effectiveness.
   tagline:
     en_us: Lightweight SSH tarpit to waste attackers' time.
