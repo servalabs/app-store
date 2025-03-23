@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       SETTINGS_ENCRYPTION_KEY: ''
       CLI_ARGS: ''
       DUPLICATI__WEBSERVICE_PASSWORD: ''
@@ -36,27 +36,28 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/duplicati/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/duplicati/backups
+        source: /files/.apps/$AppID/backups
         target: /backups
       - type: bind
-        source: /DATA/AppData/duplicati/source
+        source: /files/.apps/$AppID/source
         target: /source
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
+  author: ServaLabs
+  developer: ServaLabs
+  category: LinuxServer.io
+  title:
+    en_us: Backup Client
   description:
-    en_us: Duplicati is a backup client that securely stores encrypted, incremental, compressed backups on local storage, cloud storage services and remote file servers. It works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon S3, Google Drive, box.com, Mega, B2, and many others.
+    en_us: |
+      Backup Client is a secure and efficient tool for managing encrypted, incremental backups to local and remote destinations. It supports cloud providers and standard file transfer protocols like FTP, SSH, WebDAV, and more. With a web-based interface, it makes setting up and scheduling backups simple. The tool also includes compression and versioning to optimize storage space and protect against data loss.
   tagline:
-    en_us: A backup client that securely stores encrypted, incremental, compressed backups on local storage, cloud storage services and remote file servers. It works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon S3, Google Drive, box. Com, Mega, B2, and many others.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Secure, encrypted, incremental backup client for local and cloud storage.
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/duplicati-icon.png
   thumbnail: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/duplicati-icon.png
-  title:
-    en_us: Duplicati
-  category: LinuxServer.io
+  port_map: "8200"

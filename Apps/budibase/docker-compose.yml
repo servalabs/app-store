@@ -30,6 +30,6 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/budibase.png
   thumbnail: ""
   title:
-    en_us: Internak Tools Builder
+    en_us: Internal Tools Builder
   category: BigBearCasaOS
   port_map: "8080"
