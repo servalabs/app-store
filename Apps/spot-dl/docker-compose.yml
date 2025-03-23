@@ -12,7 +12,7 @@ services:
         source: /files/40 Entertainment/43 Music
         target: /music
       - type: bind
-        source: /DATA/AppData/coolstore-spotdl/config
+        source: /files/.apps/$AppID/
         target: /config
     command:
       - web
