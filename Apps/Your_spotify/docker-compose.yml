@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       APP_URL: ''
       SPOTIFY_PUBLIC: ''
       SPOTIFY_SECRET: ''
@@ -47,22 +47,21 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/your_spotify/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Your_spotify is a self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it! It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.
+    en_us: A self-hosted listening statistics tool that integrates with Spotify. It tracks your music habits, fetches data via the Spotify API, and presents it through a modern dashboard. Ideal for music enthusiasts who want personal listening insights. Easy to set up and fully self-hosted.
   tagline:
-    en_us: A self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it. It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Self-hosted Spotify listening stats dashboard.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
   title:
-    en_us: Your_spotify
+    en_us: Music Stats
   category: LinuxServer.io
   port_map: '80'
