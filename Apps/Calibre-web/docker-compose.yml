@@ -75,6 +75,6 @@ x-casaos:
         | -------- | -------- |
         | `admin`    | `admin123` |
   title:
-    en_us: Library Server
+    en_us: eBook Server
   index: /
   port_map: "8083"

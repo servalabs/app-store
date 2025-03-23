@@ -13,10 +13,10 @@ services:
       DB_USERNAME: casaos
       DB_PASSWORD: casaos
     volumes:
-      - /usr/bin/casaos-cli:/usr/bin/casaos-cli
-      - /etc/casaos/gateway.ini:/casaos/gateway.ini
-      - /var/lib/casaos/apps:/casaos/apps
-      - /var/lib/casaos/www:/casaos/www
+      - /files/.apps/$AppID/bin:/usr/bin/casaos-cli
+      - /files/.apps/$AppID/config:/casaos/gateway.ini
+      - /files/.apps/$AppID/apps:/casaos/apps
+      - /files/.apps/$AppID/www:/casaos/www
   db:
     image: mariadb:11.7.2
     restart: unless-stopped
@@ -30,19 +30,20 @@ services:
         published: '33066'
         protocol: tcp
     volumes:
-      - /DATA/AppData/casaos-toolbox/mysql:/var/lib/mysql
+      - /files/.apps/$AppID/mysql:/var/lib/mysql
 x-casaos:
   architectures:
     - amd64
-    - arm
-    - arm64
   main: app
   description:
-    en_us: CasaOS Toolbox is an extension application that provides additional features to CasaOS.
+    en_us: |
+      Utility-Hub extends your CasaOS setup with advanced tools and management capabilities. 
+      It integrates seamlessly with CasaOS, offering centralized access to core components like databases, gateways, and CLI tools. 
+      With a focus on enhancing system control and developer productivity, Utility-Hub is perfect for advanced users and tinkerers alike.
   tagline:
-    en_us: Provides additional features to CasaOS.
-  developer: WisdomSky
-  author: WisdomSky
+    en_us: Enhance CasaOS with developer utilities and tools.
+  developer: ServaLabs
+  author: ServaLabs
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/screenshot-2.png
@@ -51,5 +52,5 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/casaos-toolbox/icon.png
   category: Coolstore
   title:
-    en_us: CasaOS Toolbox
+    en_us: Toolbox
   port_map: '8088'

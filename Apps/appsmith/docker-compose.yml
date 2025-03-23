@@ -1,60 +1,44 @@
-# Configuration for appsmith setup
-
-# Name of the big-bear-appsmith application
 name: big-bear-appsmith
 
-# Service definitions for the big-bear-appsmith application
 services:
-  # Service name: app
-  # The `app` service definition
   app:
-    image: appsmith/appsmith-ce:v1.53.1 # Docker image to use
-    container_name: appsmith # Name of the container
+    image: appsmith/appsmith-ce:v1.53.1
+    container_name: appsmith
     ports:
-      - "1080:80" # Port mapping host:container for HTTP
-      - "10443:443" # Port mapping host:container for HTTPS
+      - "1080:80"
+      - "10443:443"
     volumes:
-      - /DATA/AppData/$AppID/stacks:/appsmith-stacks # Mount volume for app data
-    restart: unless-stopped # Container restart policy
-    x-casaos: # CasaOS specific configuration
+      - /files/.apps/$AppID/stacks:/appsmith-stacks
+    restart: unless-stopped
+    x-casaos:
       volumes:
         - container: /appsmith-stacks
           description:
-            en_us: "Container Path: /appsmith-stacks" # Description of the volume
+            en_us: "Container Path: /appsmith-stacks"
       ports:
         - container: "1080"
           description:
-            en_us: "Container Port: 1080" # Description of the HTTP port
+            en_us: "Container Port: 1080"
         - container: "10443"
           description:
-            en_us: "Container Port: 10443" # Description of the HTTPS port
+            en_us: "Container Port: 10443"
 
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: app
   description:
-    # Description in English
-    en_us: Low code project to build admin panels, internal tools, and dashboards, integrating 15+ databases.
+    en_us: |
+      Admin-Builder is a low-code platform to create internal tools, dashboards, and CRUD apps effortlessly. 
+      It integrates with multiple data sources like PostgreSQL, REST APIs, and Google Sheets, empowering teams to build quickly. 
+      With a rich component library and drag-and-drop UI, you can create responsive apps without needing full-stack development skills.
   tagline:
-    # Short description or tagline in English
-    en_us: Appsmith
-  # Developer's name or identifier
-  developer: "appsmithorg"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
+    en_us: Internal Tool Builder
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/appsmithorg/appsmith/static/logo.png
-  # Thumbnail image (currently empty)
   thumbnail: ""
   title:
-    # Title in English
-    en_us: Appsmith
-  # Application category
+    en_us: App Builder
   category: BigBearCasaOS
-  # Port mapping information
   port_map: "1080"
