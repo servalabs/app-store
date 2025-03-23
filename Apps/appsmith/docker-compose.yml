@@ -1,28 +1,15 @@
 name: big-bear-appsmith
-
+name: big-bear-appsmith
 services:
-  app:
-    image: appsmith/appsmith-ce:v1.53.1
-    container_name: appsmith
-    ports:
-      - "1080:80"
-      - "10443:443"
-    volumes:
-      - /files/.apps/$AppID/stacks:/appsmith-stacks
-    restart: unless-stopped
-    x-casaos:
-      volumes:
-        - container: /appsmith-stacks
-          description:
-            en_us: "Container Path: /appsmith-stacks"
-      ports:
-        - container: "1080"
-          description:
-            en_us: "Container Port: 1080"
-        - container: "10443"
-          description:
-            en_us: "Container Port: 10443"
-
+   appsmith:
+     image: index.docker.io/appsmith/appsmith-ce
+     container_name: appsmith
+     ports:
+         - "1080:80"
+         - "10443:443"
+     volumes:
+         - ./stacks:/appsmith-stacks
+     restart: unless-stopped
 x-casaos:
   architectures:
     - amd64

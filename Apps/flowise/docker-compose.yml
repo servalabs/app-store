@@ -7,8 +7,8 @@ services:
     entrypoint: /bin/sh -c "sleep 3; flowise start"
     environment:
       - PORT=8009
-      - FLOWISE_USERNAME=bigbear
-      - FLOWISE_PASSWORD=b0f91e4c-9d4b-4375-bc9b-9b57667ce7ab
+      - FLOWISE_USERNAME=admin
+      - FLOWISE_PASSWORD=password
       - FLOWISE_SECRETKEY_OVERWRITE="true"
       - LANGCHAIN_ENDPOINT=""
       - LANGCHAIN_API_KEY=""
@@ -30,10 +30,10 @@ services:
             en_us: "Container Port: 8009"
         - container: "FLOWISE_USERNAME"
           description:
-            en_us: "Username: bigbear"
+            en_us: "Username: admin"
         - container: "FLOWISE_PASSWORD"
           description:
-            en_us: "Password: b0f91e4c-9d4b-4375-bc9b-9b57667ce7ab"
+            en_us: "Password: password"
         - container: "FLOWISE_SECRETKEY_OVERWRITE"
           description:
             en_us: "Secretkey Overwrite: true"
