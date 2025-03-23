@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       VERBOSITY: ''
     x-casaos:
       envs:
@@ -28,76 +28,75 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/fail2ban/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/fail2ban/var/log:ro
+        source: /files/.apps/$AppID/var-log
         target: /var/log:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/airsonic:ro
+        source: /files/.apps/$AppID/remotelogs-airsonic
         target: /remotelogs/airsonic:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/apache2:ro
+        source: /files/.apps/$AppID/remotelogs-apache2
         target: /remotelogs/apache2:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/authelia:ro
+        source: /files/.apps/$AppID/remotelogs-authelia
         target: /remotelogs/authelia:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/emby:ro
+        source: /files/.apps/$AppID/remotelogs-emby
         target: /remotelogs/emby:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/filebrowser:ro
+        source: /files/.apps/$AppID/remotelogs-filebrowser
         target: /remotelogs/filebrowser:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/homeassistant:ro
+        source: /files/.apps/$AppID/remotelogs-homeassistant
         target: /remotelogs/homeassistant:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/lighttpd:ro
+        source: /files/.apps/$AppID/remotelogs-lighttpd
         target: /remotelogs/lighttpd:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/nextcloud:ro
+        source: /files/.apps/$AppID/remotelogs-nextcloud
         target: /remotelogs/nextcloud:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/nginx:ro
+        source: /files/.apps/$AppID/remotelogs-nginx
         target: /remotelogs/nginx:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/nzbget:ro
+        source: /files/.apps/$AppID/remotelogs-nzbget
         target: /remotelogs/nzbget:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/overseerr:ro
+        source: /files/.apps/$AppID/remotelogs-overseerr
         target: /remotelogs/overseerr:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/prowlarr:ro
+        source: /files/.apps/$AppID/remotelogs-prowlarr
         target: /remotelogs/prowlarr:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/radarr:ro
+        source: /files/.apps/$AppID/remotelogs-radarr
         target: /remotelogs/radarr:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/sabnzbd:ro
+        source: /files/.apps/$AppID/remotelogs-sabnzbd
         target: /remotelogs/sabnzbd:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/sonarr:ro
+        source: /files/.apps/$AppID/remotelogs-sonarr
         target: /remotelogs/sonarr:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/unificontroller:ro
+        source: /files/.apps/$AppID/remotelogs-unificontroller
         target: /remotelogs/unificontroller:ro
       - type: bind
-        source: /DATA/AppData/fail2ban/remotelogs/vaultwarden:ro
+        source: /files/.apps/$AppID/remotelogs-vaultwarden
         target: /remotelogs/vaultwarden:ro
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Fail2ban is a daemon to ban hosts that cause multiple authentication errors.
+    en_us: Attack Protector automates the detection and banning of malicious IP addresses that trigger authentication failures. It integrates with a variety of log sources and offers protection for services like SSH, web apps, and more. This daemon enhances server security by dynamically updating firewall rules to block threats in real time.
   tagline:
-    en_us: A daemon to ban hosts that cause multiple authentication errors.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Intelligent IP banning for brute-force protection.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/fail2ban-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/fail2ban-logo.png
   title:
-    en_us: Fail2ban
+    en_us: Attack Protector
   category: LinuxServer.io
   port_map: '80'

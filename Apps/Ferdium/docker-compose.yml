@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
     x-casaos:
       envs:
         - container: PUID
@@ -27,21 +27,21 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/ferdium/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: Ferdium is a desktop app that helps you organize how you use your favourite apps by combining them into one application.
+    en_us: Socials Hub is a productivity-focused app that consolidates all your messaging services into a single, unified interface. Stay connected with your favorite platforms like WhatsApp, Slack, and Telegram without switching tabs. It’s an open-source tool tailored for seamless multitasking and minimal distractions.
   tagline:
-    en_us: A desktop app that helps you organize how you use your favourite apps by combining them into one application.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: All-in-one desktop client for your messaging apps.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ferdium-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ferdium-logo.png
   title:
-    en_us: Ferdium
+    en_us: Socials Hub
   category: LinuxServer.io
+  port_map: "3000"

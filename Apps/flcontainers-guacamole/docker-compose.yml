@@ -1,25 +1,17 @@
-# Name of the configuration: big-bear-flcontainers-guacamole
 name: big-bear-flcontainers-guacamole
 
-# Define the services required for the application
 services:
-  # app service configuration
   app:
-    # Docker image to use for this service
     image: flcontainers/guacamole:1.5.5
-    # Container name
     container_name: big-bear-flcontainers-guacamole
-    # Restart policy for the container
     restart: always
-    # Environment variables for the app service
     environment:
-      tz: "UTC"
+      tz: "Asia/Kolkata"
       EXTENSIONS: "auth-totp,auth-ldap"
-    # Map port 8080 on the host to port 8080 on the container
     ports:
       - 8080:8080
 
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       envs:
         - container: TZ
           description:
@@ -32,32 +24,23 @@ services:
           description:
             en_us: "Container Port: 8080"
 
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: app
-  # Application description in English
+  author: ServaLabs
+  developer: ServaLabs
   description:
-    en_us: A Docker Container for Apache Guacamole, a client-less remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH over HTML5.
-  # Short description or tagline in English
+    en_us: |
+      Remote Desktop Gateway provides secure, client-less access to remote machines using standard protocols such as RDP, VNC, and SSH. 
+      Access is done through a web browser without the need for plugins, ensuring ease of use and compatibility. 
+      It's ideal for managing multiple desktops and servers in a centralized manner. 
+      Enable extensions for added security and integration options like TOTP and LDAP.
   tagline:
-    en_us: Fully packaged Multi-Arch Guacamole.
-  # Developer's name or identifier (currently empty)
-  developer: ""
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
+    en_us: Web-based Remote Desktop Access.
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/guacamole.png
-  # Thumbnail image (currently empty)
   thumbnail: ""
-  # Title of the application in English
   title:
-    en_us: FlContainers Guacamole
-  # Application category
+    en_us: Remote Desktop Gateway
   category: BigBearCasaOS
-  # Port mapping information
   port_map: "8080"
