@@ -1,13 +1,8 @@
 name: homebox
 services:
     homebox:
-        cpu_shares: 90
         command: []
         container_name: homebox
-        deploy:
-            resources:
-                limits:
-                    memory: "16524509184"
         environment:
             HBOX_OPTIONS_ALLOW_ANALYTICS: "false"
             TZ: IN
@@ -29,6 +24,8 @@ networks:
     default:
         name: yourprojectname_default
 x-casaos:
+    architectures:
+        - amd64
     author: self
     category: self
     hostname: ""

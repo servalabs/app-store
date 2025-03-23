@@ -81,4 +81,4 @@ x-casaos:
     thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
     title:
         custom: ""
-        en_us: Your_spotify
+        en_us: Spotify Tracker
