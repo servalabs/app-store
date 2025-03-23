@@ -1,19 +1,13 @@
-# Configuration for big-bear-dashdot setup
-
-# Name of the big-bear-dashdot application
 name: big-bear-dashdot
-
-# Service definitions for the dashdot application
 services:
-  # Service definition for the main application
   app:
-    image: mauricenino/dashdot:5.9.2 # Image to be used for this service
+    image: mauricenino/dashdot:5.9.2
     ports:
-      - "3001:3001" # Port 3001 on the host is mapped to port 3001 in the container
+      - "3001:3001"
     volumes:
-      - /DATA/AppData/$AppID:/mnt/host# Mounting the local dashdot directory to /mnt/host inside the container
-    privileged: true # Runs the container in privileged mode, allowing it access to host devices
-    x-casaos: # CasaOS specific configuration
+      - /files/.apps/$AppID/host:/mnt/host
+    privileged: true
+    x-casaos:
       volumes:
         - container: /mnt/host
           description:
@@ -22,34 +16,19 @@ services:
         - container: "3001"
           description:
             en_us: "Container Port: 3001"
-
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm
-    - arm64
-  # Main service of the application
   main: app
-  # Detailed description of the application
-  description:
-    en_us: About A simple, modern server dashboard, primarily used by smaller private servers.
-  # Short description or tagline for the application
-  tagline:
-    en_us: dash. - a modern server dashboard
-  # Developer's name or identifier for the application
-  developer: "mauricenino"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon URL for the application
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dashdot.png
-  # Thumbnail image URL for the application (currently empty)
-  thumbnail: ""
-  # Title for the application
-  title:
-    en_us: Dashdot
-  # Application category
+  author: ServaLabs
+  developer: ServaLabs
   category: BigBearCasaOS
-  # Port mapping information for the application
+  description:
+    en_us: A sleek and responsive server dashboard for monitoring system health. Ideal for small home servers, it provides real-time stats including CPU, RAM, storage, and network usage. Simple to deploy and user-friendly with clean visuals.
+  tagline:
+    en_us: A modern and lightweight server dashboard
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dashdot.png
+  thumbnail: ""
+  title:
+    en_us: Dashboard
   port_map: "3001"
