@@ -53,7 +53,7 @@ services:
         source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /files/.apps/.assets
+        source: /files/.assets
         target: /assets
 x-casaos:
   architectures:

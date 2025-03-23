@@ -22,7 +22,7 @@ services:
         source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /files/.apps/$AppID/books
+        source: /files/50 Infotainment/
         target: /books
     x-casaos:
       envs:
@@ -58,7 +58,7 @@ x-casaos:
   category: Media
   description:
     en_us: |
-      Library-Server is a modern web application for managing and reading eBooks using a pre-existing Calibre database. It allows users to browse, read, and download eBooks from any device. Features include metadata editing, Google Drive integration, and an intuitive user interface for seamless library management.
+      eBook Server is a modern web application for managing and reading eBooks using a pre-existing Calibre database. It allows users to browse, read, and download eBooks from any device. Features include metadata editing, Google Drive integration, and an intuitive user interface for seamless library management.
   developer: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/icon.png
   screenshot_link:

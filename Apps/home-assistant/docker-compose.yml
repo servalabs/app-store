@@ -1,5 +1,4 @@
 name: big-bear-home-assistant
-
 services:
   app:
     container_name: big-bear-home-assistant
@@ -22,7 +21,6 @@ services:
         - container: /run/dbus
           description:
             en_us: "Container Path: /run/dbus"
-
 x-casaos:
   architectures:
     - amd64

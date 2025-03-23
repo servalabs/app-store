@@ -15,7 +15,7 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/downloads
+        source: /files/Downloads
         target: /downloads
 x-casaos:
   architectures:

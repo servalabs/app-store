@@ -15,7 +15,7 @@ services:
         source: /files/.apps/$AppID/data
         target: /data
       - type: bind
-        source: /files/.apps/$AppID/music
+        source: /files/40 Entertainment/43 Music/
         target: /music
         read_only: true
 x-casaos:

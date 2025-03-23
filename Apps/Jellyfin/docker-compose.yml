@@ -40,11 +40,8 @@ services:
         source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /files/.apps/$AppID/tvshows
-        target: /data/tvshows
-      - type: bind
-        source: /files/.apps/$AppID/movies
-        target: /data/movies
+        source: /files/40 Entertainment
+        target: /data/
 x-casaos:
   architectures:
     - amd64
