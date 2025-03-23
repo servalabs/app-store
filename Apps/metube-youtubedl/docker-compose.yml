@@ -15,23 +15,24 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/downloads
+        source: /files/.apps/$AppID/downloads
         target: /downloads
 x-casaos:
   architectures:
     - amd64
-    - arm
-    - arm64
   main: app
+  author: ServaLabs
+  developer: ServaLabs
+  category: Coolstore
   description:
-    en_us: Web GUI for youtube-dl with playlist support. Allows you to download videos from YouTube and dozens of other sites (https://ytdl-org.github.io/youtube-dl/supportedsites.html).
+    en_us: |
+      Video Downloader is a user-friendly web GUI for downloading videos using youtube-dl. 
+      It supports playlists and a wide range of sites, allowing users to easily grab content from YouTube and beyond. 
+      Designed for simplicity and dark mode support, it’s a powerful tool for managing personal media collections.
   tagline:
-    en_us: Web Gui For Youtube-dl With Playlist Support. Allows You To Download Videos From Youtube And Dozens Of Other Sites (https://ytdl-org.github.io/youtube-dl/supportedsites.html).
-  developer: ''
-  author: WisdomSky
+    en_us: Web GUI for downloading videos and playlists from YouTube and other platforms.
   icon: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/ytdlm.png
   thumbnail: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/ytdlm.png
   title:
-    en_us: Metube
-  category: Coolstore
+    en_us: YouTube Downloader
   port_map: '8081'

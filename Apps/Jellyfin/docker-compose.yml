@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
       JELLYFIN_PublishedServerUrl: ''
     x-casaos:
       envs:
@@ -37,27 +37,28 @@ services:
         protocol: udp
     volumes:
       - type: bind
-        source: /DATA/AppData/jellyfin/config
+        source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/jellyfin/data/tvshows
+        source: /files/.apps/$AppID/tvshows
         target: /data/tvshows
       - type: bind
-        source: /DATA/AppData/jellyfin/data/movies
+        source: /files/.apps/$AppID/movies
         target: /data/movies
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
+  author: ServaLabs
+  developer: ServaLabs
+  category: LinuxServer.io
   description:
-    en_us: 'Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby''s 3.5.2 release and ported to the .NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.'
+    en_us: |
+      Media Server is a powerful, open-source platform for organizing, managing, and streaming personal media libraries. It allows you to stream your video, music, and TV shows to a variety of devices from your own server. With full cross-platform support and no premium restrictions, it's ideal for home media enthusiasts seeking control and flexibility.
   tagline:
-    en_us: 'A Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby''s 3. 5. 2 release and ported to the. NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.'
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Open-source media server for streaming and managing your content.
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
   title:
-    en_us: Jellyfin
-  category: LinuxServer.io
+    en_us: Media Server
+  port_map: "8096"
