@@ -1,26 +1,11 @@
-# Configuration for cloudflared-web setup
-
-# Name of the big-bear-cloudflared-web application
 name: big-bear-cloudflared-web
 
-# Service definitions for the big-bear-cloudflared-web application
 services:
-  # Service name: big-bear-cloudflared-web
-  # The `big-bear-cloudflared-web` service definition
   big-bear-cloudflared-web:
-    # Name of the container
     container_name: big-bear-cloudflared-web
-
-    # Image to be used for the container
     image: wisdomsky/cloudflared-web:2025.2.1
-
-    # Container restart policy
     restart: unless-stopped
-
-    # Network mode
     network_mode: host
-
-    # Environment variables for the container
     environment:
       - WEBUI_PORT=14333
       - EDGE_IP_VERSION=auto
@@ -29,8 +14,7 @@ services:
       - METRICS_PORT=60123
       - BASIC_AUTH_USER=admin
       - BASIC_AUTH_PASS=""
-
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       envs:
         - container: WEBUI_PORT
           description:
@@ -56,36 +40,25 @@ services:
           description:
             en_us: "Container Port: 14333"
 
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: big-bear-cloudflared-web
+  author: ServaLabs
+  developer: ServaLabs
   description:
-    # Description in English
-    en_us: Cloudflared-web is a docker image that packages both cloudflared cli and a simple Web UI to easily start or stop remotely-managed Cloudflare tunnel.
+    en_us: |
+      Tunnel Manager provides an easy-to-use web interface for controlling Cloudflare Tunnels. 
+      With built-in support for Cloudflared CLI, it simplifies remote access setup by letting users start and stop tunnels without command line operations. 
+      Ideal for quick deployments and managing secure connections via Cloudflare's network.
   tagline:
-    # Short description or tagline in English
-    en_us: Cloudflared Web
-  # Developer's name or identifier
-  developer: "wisdomsky"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cloudflare.png
-  # Thumbnail image (currently empty)
-  thumbnail: ""
+    en_us: Manage Cloudflare Tunnels effortlessly
   title:
-    # Title in English
-    en_us: Cloudflared Web
-  # Application category
+    en_us: Cloudflare Tunnels
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cloudflare.png
+  thumbnail: ""
   category: BigBearCasaOS
-  # Port mapping information
   port_map: "14333"
-  # Tips
   tips:
     before_install:
       en_us: |
