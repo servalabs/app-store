@@ -34,7 +34,7 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
+      - /files/.apps/$AppID/data:/var/lib/data
     healthcheck:
       test:
         - CMD
@@ -59,18 +59,14 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
+      - /files/.apps/$AppID/data:/var/lib/data
     depends_on:
       - db
       - cache
       - backend-inference
       - backend-plugin
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - "-f"
-        - http://localhost:8000/v1/health_check
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
       interval: 15s
       timeout: 10s
       retries: 5
@@ -93,7 +89,7 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
+      - /files/.apps/$AppID/data:/var/lib/data
     depends_on:
       - db
       - cache
@@ -117,7 +113,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: TaskingAI321
     volumes:
-      - /DATA/AppData/$AppID/data/postgres:/var/lib/postgresql/data
+      - /files/.apps/$AppID/postgres:/var/lib/postgresql/data
     healthcheck:
       test:
         - CMD-SHELL
@@ -135,7 +131,7 @@ services:
       - "--requirepass"
       - TaskingAI321
     volumes:
-      - /DATA/AppData/$AppID/data/redis:/data
+      - /files/.apps/$AppID/redis:/data
     healthcheck:
       test:
         - CMD
@@ -154,7 +150,7 @@ services:
     ports:
       - "3080:80"
     volumes:
-      - /DATA/AppData/$AppID/data/nginx_cache:/var/cache/nginx
+      - /files/.apps/$AppID/nginx_cache:/var/cache/nginx
     depends_on:
       - frontend
       - backend-web
@@ -170,14 +166,12 @@ networks:
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: frontend
-  author: CasaOS Team
+  author: ServaLabs
   category: Chat
   description:
-    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
-    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
-  developer: TaskingAI Team
+    en_us: A versatile platform to self-host LLM agents with integrated tools for inference, API interaction, and plugin extensibility.
+  developer: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-1.png
@@ -185,8 +179,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-3.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-4.png
   tagline:
-    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
-    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
+    en_us: Self-hosted LLM agent platform with plugin and API integration.
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/thumbnail.png
   tips:
     before_install:
@@ -195,7 +188,7 @@ x-casaos:
         | -------- | ---------- |
         | admin    | TaskingAI321 |
   title:
-    en_us: TaskingAI
+    en_us: LLM Agent Platform
   port_map: "3080"
 configs:
   nginx_config:
