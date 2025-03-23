@@ -1,0 +1,43 @@
+name: homebox
+services:
+    homebox:
+        cpu_shares: 90
+        command: []
+        container_name: homebox
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            HBOX_OPTIONS_ALLOW_ANALYTICS: "false"
+            TZ: IN
+        hostname: homebox
+        image: ghcr.io/sysadminsmedia/homebox:latest
+        labels:
+            icon: https://icon.casaos.io/main/all/homebox.png
+        network_mode: bridge
+        ports:
+            - target: 7745
+              published: "3100"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Homebox
+              target: /data
+networks:
+    default:
+        name: yourprojectname_default
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: https://icon.casaos.io/main/all/homebox.png
+    index: /
+    is_uncontrolled: false
+    port_map: "3100"
+    scheme: http
+    store_app_id: homebox
+    title:
+        custom: ""
+        en_us: homebox

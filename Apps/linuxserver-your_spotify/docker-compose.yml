@@ -1,0 +1,84 @@
+name: linuxserver-your_spotify
+services:
+    app:
+        cpu_shares: 90
+        command: []
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            APP_URL: ""
+            CORS: ""
+            MONGO_ENDPOINT: ""
+            PGID: $PGID
+            PUID: $PUID
+            SPOTIFY_PUBLIC: ""
+            SPOTIFY_SECRET: ""
+            TZ: IN
+        image: linuxserver/your_spotify:1.12.0
+        labels:
+            icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
+        networks:
+            default: null
+        ports:
+            - target: 80
+              published: "8099"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/your_spotify/config
+              target: /config
+        x-casaos:
+            envs:
+                - container: PUID
+                  description:
+                    en_us: for UserID
+                - container: PGID
+                  description:
+                    en_us: for GroupID
+                - container: TZ
+                  description:
+                    en_us: specify a timezone to use, see this list.
+                - container: APP_URL
+                  description:
+                    en_us: The protocol and hostname where the app will be accessed.
+                - container: SPOTIFY_PUBLIC
+                  description:
+                    en_us: Your Spotify application client ID.
+                - container: SPOTIFY_SECRET
+                  description:
+                    en_us: Your Spotify application secret.
+                - container: CORS
+                  description:
+                    en_us: Allowed CORS sources, set to all to allow any source.
+                - container: MONGO_ENDPOINT
+                  description:
+                    en_us: Set mongodb endpoint address/port.
+networks:
+    default:
+        name: linuxserver-your_spotify_default
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    author: WisdomSky
+    category: LinuxServer.io
+    description:
+        en_us: Your_spotify is a self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it! It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.
+    developer: LinuxServer.io
+    hostname: ""
+    icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
+    index: /
+    is_uncontrolled: false
+    main: app
+    port_map: "8099"
+    scheme: http
+    store_app_id: linuxserver-your_spotify
+    tagline:
+        en_us: A self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it. It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.
+    thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png
+    title:
+        custom: ""
+        en_us: Your_spotify

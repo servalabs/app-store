@@ -1,0 +1,74 @@
+name: linuxserver-syncthing
+services:
+    app:
+        cpu_shares: 90
+        command: []
+        container_name: syncer
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: IN
+        image: linuxserver/syncthing:1.29.3
+        labels:
+            icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png
+        networks:
+            default: null
+        ports:
+            - target: 8384
+              published: "8384"
+              protocol: tcp
+            - target: 22000
+              published: "22000"
+              protocol: tcp
+            - target: 22000
+              published: "22000"
+              protocol: udp
+            - target: 21027
+              published: "21027"
+              protocol: udp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Syncer
+              target: /config
+        x-casaos:
+            envs:
+                - container: PUID
+                  description:
+                    en_us: for UserID
+                - container: PGID
+                  description:
+                    en_us: for GroupID
+                - container: TZ
+                  description:
+                    en_us: specify a timezone to use, see this list.
+networks:
+    default:
+        name: linuxserver-syncthing_default
+x-casaos:
+    architectures:
+        - arm64
+        - amd64
+    author: WisdomSky
+    category: LinuxServer.io
+    description:
+        en_us: Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.
+    developer: LinuxServer.io
+    hostname: ""
+    icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png
+    index: /
+    is_uncontrolled: false
+    main: app
+    port_map: "8384"
+    scheme: http
+    store_app_id: linuxserver-syncthing
+    tagline:
+        en_us: Replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.
+    thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png
+    title:
+        custom: Syncer
+        en_us: Syncthing

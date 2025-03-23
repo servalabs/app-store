@@ -1,0 +1,229 @@
+name: big-bear-immich
+services:
+    database:
+        cpu_shares: 90
+        command: []
+        container_name: immich-postgres
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            PG_DATA: /var/lib/postgresql/data
+            POSTGRES_DB: immich
+            POSTGRES_PASSWORD: casaos
+            POSTGRES_USER: casaos
+        hostname: immich-postgres
+        image: tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+        labels:
+            icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+        networks:
+            big_bear_immich_network: null
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Gallery/pgdata
+              target: /var/lib/postgresql/data
+              bind:
+                create_host_path: true
+        x-casaos:
+            envs:
+                - container: POSTGRES_PASSWORD
+                  description:
+                    en_us: Database Password
+                - container: POSTGRES_USER
+                  description:
+                    en_us: Database Username
+                - container: POSTGRES_DB
+                  description:
+                    en_us: Database Name
+                - container: PG_DATA
+                  description:
+                    en_us: 'Container Path: /var/lib/postgresql/data'
+            volumes:
+                - container: /var/lib/postgresql/data
+                  description:
+                    en_us: 'Container Path: /var/lib/postgresql/data'
+    immich-machine-learning:
+        cpu_shares: 90
+        command: []
+        container_name: immich-machine-learning
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            DB_DATABASE_NAME: casaos
+            DB_HOSTNAME: immich-postgres
+            DB_PASSWORD: casaos
+            DB_PORT: "5432"
+            DB_USERNAME: casaos
+            REDIS_HOSTNAME: immich-redis
+        hostname: immich-machine-learning
+        image: ghcr.io/immich-app/immich-machine-learning:v1.129.0
+        labels:
+            icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+        networks:
+            big_bear_immich_network: null
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Gallery/model-cache
+              target: /cache
+              bind:
+                create_host_path: true
+        x-casaos:
+            envs:
+                - container: DB_HOSTNAME
+                  description:
+                    en_us: Database Hostname
+                - container: DB_USERNAME
+                  description:
+                    en_us: Database Username
+                - container: DB_PASSWORD
+                  description:
+                    en_us: Database Password
+                - container: DB_DATABASE_NAME
+                  description:
+                    en_us: Database Name
+                - container: DB_PORT
+                  description:
+                    en_us: Database Port
+                - container: REDIS_HOSTNAME
+                  description:
+                    en_us: Redis Hostname
+            volumes:
+                - container: /cache
+                  description:
+                    en_us: 'Container Path: /cache'
+    immich-server:
+        cpu_shares: 90
+        command: []
+        container_name: immich-server
+        depends_on:
+            database:
+                condition: service_started
+                required: true
+            redis:
+                condition: service_started
+                required: true
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            DB_DATABASE_NAME: immich
+            DB_HOSTNAME: immich-postgres
+            DB_PASSWORD: casaos
+            DB_PORT: "5432"
+            DB_USERNAME: casaos
+            IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
+            REDIS_HOSTNAME: immich-redis
+        hostname: immich-server
+        image: ghcr.io/immich-app/immich-server:v1.129.0
+        labels:
+            icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+        networks:
+            big_bear_immich_network: null
+        ports:
+            - mode: ingress
+              target: 2283
+              published: "2283"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Gallery/upload/upload
+              target: /usr/src/app/upload/upload
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /lab/Apps/Gallery/upload/thumbs
+              target: /usr/src/app/upload/thumbs
+            - type: bind
+              source: /lab/Apps/Gallery/upload/profile
+              target: /usr/src/app/upload/profile
+            - type: bind
+              source: /lab/Apps/Gallery/upload/encoded-video
+              target: /usr/src/app/upload/encoded-video
+            - type: bind
+              source: /lab/30 Media
+              target: /usr/src/app/upload/library
+            - type: bind
+              source: /lab/10 Software/18 Backups - Recovery/Gallery - Database
+              target: /usr/src/app/upload/backups
+        x-casaos:
+            envs:
+                - container: DB_HOSTNAME
+                  description:
+                    en_us: Database Hostname
+                - container: DB_USERNAME
+                  description:
+                    en_us: Database Username
+                - container: DB_PASSWORD
+                  description:
+                    en_us: Database Password
+                - container: DB_DATABASE_NAME
+                  description:
+                    en_us: Database Name
+                - container: DB_PORT
+                  description:
+                    en_us: Database Port
+                - container: REDIS_HOSTNAME
+                  description:
+                    en_us: Redis Hostname
+                - container: IMMICH_MACHINE_LEARNING_URL
+                  description:
+                    en_us: Immich Machine Learning URL
+            ports:
+                - container: "2283"
+                  description:
+                    en_us: 'Container Port: 2283'
+            volumes:
+                - container: /usr/src/app/upload
+                  description:
+                    en_us: 'Container Path: /usr/src/app/upload'
+    redis:
+        cpu_shares: 90
+        command: []
+        container_name: immich-redis
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        hostname: immich-redis
+        image: redis:6.2-alpine@sha256:70a7a5b641117670beae0d80658430853896b5ef269ccf00d1827427e3263fa3
+        labels:
+            icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+        networks:
+            big_bear_immich_network: null
+        restart: always
+networks:
+    big_bear_immich_network:
+        name: big-bear-immich_big_bear_immich_network
+        driver: bridge
+    default:
+        name: big-bear-immich_default
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    author: BigBearTechWorld
+    category: BigBearCasaOS
+    description:
+        en_us: Self-hosted photo and video storage.
+    developer: ""
+    hostname: ""
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+    index: /
+    is_uncontrolled: false
+    main: immich-server
+    port_map: "2283"
+    scheme: http
+    store_app_id: big-bear-immich
+    tagline:
+        en_us: Immich
+    thumbnail: ""
+    title:
+        custom: ""
+        en_us: Immich

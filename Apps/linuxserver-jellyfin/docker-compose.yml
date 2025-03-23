@@ -1,0 +1,88 @@
+name: linuxserver-jellyfin
+services:
+    app:
+        cpu_shares: 90
+        command: []
+        container_name: content-player
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            JELLYFIN_PublishedServerUrl: ""
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: content-player
+        image: linuxserver/jellyfin:10.10.6
+        labels:
+            icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
+        networks:
+            default: null
+        ports:
+            - target: 8096
+              published: "8096"
+              protocol: tcp
+            - target: 8920
+              published: "8920"
+              protocol: tcp
+            - target: 7359
+              published: "7359"
+              protocol: udp
+            - target: 1900
+              published: "1900"
+              protocol: udp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Content Player
+              target: /config
+            - type: bind
+              source: /lab/40 Entertainment/42 Shows
+              target: /data/tvshows
+            - type: bind
+              source: /lab/40 Entertainment/41 Movies
+              target: /data/movies
+            - type: bind
+              source: /lab/40 Entertainment/43 Music
+              target: /data/music
+        x-casaos:
+            envs:
+                - container: PUID
+                  description:
+                    en_us: for UserID
+                - container: PGID
+                  description:
+                    en_us: for GroupID
+                - container: TZ
+                  description:
+                    en_us: specify a timezone to use, see this list.
+                - container: JELLYFIN_PublishedServerUrl
+                  description:
+                    en_us: Set the autodiscovery response domain or IP address, include http(s)://.
+networks:
+    default:
+        name: linuxserver-jellyfin_default
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    author: WisdomSky
+    category: LinuxServer.io
+    description:
+        en_us: 'Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby''s 3.5.2 release and ported to the .NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.'
+    developer: LinuxServer.io
+    hostname: ""
+    icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
+    index: /
+    is_uncontrolled: false
+    main: app
+    port_map: "8096"
+    scheme: http
+    store_app_id: linuxserver-jellyfin
+    tagline:
+        en_us: 'A Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby''s 3. 5. 2 release and ported to the. NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.'
+    thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
+    title:
+        custom: Content Player
+        en_us: Jellyfin

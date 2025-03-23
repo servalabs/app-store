@@ -1,0 +1,86 @@
+name: linuxserver-qbittorrent
+services:
+    app:
+        cpu_shares: 90
+        command: []
+        container_name: torrenter
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TORRENTING_PORT: "6881"
+            TZ: IN
+            WEBUI_PORT: "8090"
+        hostname: torrenter
+        image: linuxserver/qbittorrent:5.0.4
+        labels:
+            icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+        networks:
+            default: null
+        ports:
+            - target: 8090
+              published: "8090"
+              protocol: tcp
+            - target: 6881
+              published: "6881"
+              protocol: tcp
+            - target: 6881
+              published: "6881"
+              protocol: udp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /lab/Apps/Torrenter/config
+              target: /config
+            - type: bind
+              source: /lab/40 Entertainment
+              target: /downloads
+            - type: bind
+              source: /lab/Apps/Torrenter/theme
+              target: /theme
+        x-casaos:
+            envs:
+                - container: PUID
+                  description:
+                    en_us: for UserID
+                - container: PGID
+                  description:
+                    en_us: for GroupID
+                - container: TZ
+                  description:
+                    en_us: specify a timezone to use, see this list.
+                - container: WEBUI_PORT
+                  description:
+                    en_us: for changing the port of the web UI, see below for explanation
+                - container: TORRENTING_PORT
+                  description:
+                    en_us: for changing the port of tcp/udp connection, see below for explanation
+networks:
+    default:
+        name: linuxserver-qbittorrent_default
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    author: WisdomSky
+    category: LinuxServer.io
+    description:
+        en_us: The Qbittorrent project aims to provide an open-source software alternative to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.
+    developer: LinuxServer.io
+    hostname: ""
+    icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+    index: /
+    is_uncontrolled: false
+    main: app
+    port_map: "8090"
+    scheme: http
+    store_app_id: linuxserver-qbittorrent
+    tagline:
+        en_us: The Qbittorrent project aims to provide an open-source software alternative to µTorrent. QBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.
+    thumbnail: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+    title:
+        custom: Torrenter
+        en_us: Qbittorrent

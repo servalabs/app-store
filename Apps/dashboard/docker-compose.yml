@@ -1,0 +1,45 @@
+name: dashboard
+services:
+    homarr:
+        cpu_shares: 90
+        command: []
+        container_name: dashboard
+        deploy:
+            resources:
+                limits:
+                    memory: "16524509184"
+        environment:
+            SECRET_ENCRYPTION_KEY: 748843101eb0ab71887675d05ef77d3649820f443ec1cf4aeeb9e5053f2780a6
+        hostname: homarr
+        image: ghcr.io/homarr-labs/homarr:latest
+        labels:
+            icon: https://icon.casaos.io/main/all/homarr.png
+        network_mode: bridge
+        ports:
+            - target: 7575
+              published: "7575"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /var/run/docker.sock
+              target: /var/run/docker.sock
+            - type: bind
+              source: /lab/Apps/Dashboard
+              target: /appdata
+networks:
+    default:
+        name: dashboard_default
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: https://icon.casaos.io/main/all/homarr.png
+    index: /
+    is_uncontrolled: false
+    port_map: "7575"
+    scheme: http
+    store_app_id: dashboard
+    title:
+        custom: Dashboard
+        en_us: homarr
