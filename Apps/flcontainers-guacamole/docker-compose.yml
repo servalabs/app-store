@@ -9,8 +9,7 @@ services:
       tz: "Asia/Kolkata"
       EXTENSIONS: "auth-totp,auth-ldap"
     ports:
-      - 8080:8080
-
+      - 8987:8080
     x-casaos:
       envs:
         - container: TZ
@@ -23,7 +22,6 @@ services:
         - container: "8080"
           description:
             en_us: "Container Port: 8080"
-
 x-casaos:
   architectures:
     - amd64
@@ -43,4 +41,4 @@ x-casaos:
   title:
     en_us: Remote Desktop Gateway
   category: BigBearCasaOS
-  port_map: "8080"
+  port_map: "8987"

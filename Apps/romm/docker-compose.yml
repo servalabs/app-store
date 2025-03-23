@@ -25,7 +25,7 @@ services:
       - /files/.apps/$AppID/config:/romm/config
       - /files/.apps/$AppID/logs:/romm/logs
     ports:
-      - 1080:8080
+      - 9841:8080
     depends_on:
       - big-bear-rommdb
     restart: "unless-stopped"
@@ -148,7 +148,7 @@ x-casaos:
   title:
     en_us: Game Library
   category: BigBearCasaOS
-  port_map: "1080"
+  port_map: "9841"
   tips:
     before_install:
       en_us: |

@@ -7,7 +7,7 @@ services:
     environment:
       - ROOT_WWW_PATH="/var/www/html"
     ports:
-      - "8080:80"
+      - "8617:80"
     x-casaos:
       envs:
         - container: "ROOT_WWW_PATH"
@@ -33,7 +33,7 @@ x-casaos:
   title:
     en_us: Game Emulator
   category: BigBearCasaOS
-  port_map: "8080"
+  port_map: "8617"
   tips:
     before_install:
       en_us: |

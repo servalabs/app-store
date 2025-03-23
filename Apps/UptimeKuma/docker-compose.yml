@@ -9,7 +9,7 @@ services:
     network_mode: bridge
     ports:
       - target: 3001
-        published: "3001"
+        published: "5657"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -50,4 +50,4 @@ x-casaos:
   title:
     en_us: Monitoring Agent
   index: /
-  port_map: "3001"
+  port_map: "5657"

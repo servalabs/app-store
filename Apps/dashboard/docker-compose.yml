@@ -1,0 +1,36 @@
+name: dashboard
+services:
+  homarr:
+    container_name: homarr
+      - SECRET_ENCRYPTION_KEY=3a1f7690cb1d502ced33852ea7f872d8a4915ea0685ce5b9f8dd701890dd4ca1
+    hostname: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    labels:
+      icon: https://static-00.iconduck.com/assets.00/homarr-icon-1024x693-nfs9morv.png
+    ports:
+      - target: 7575
+        published: "7575"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /tmp/casaos-compose-app-50267877/homarr/appdata
+        target: /appdata
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://static-00.iconduck.com/assets.00/homarr-icon-1024x693-nfs9morv.png
+  index: /
+  is_uncontrolled: false
+  port_map: "7575"
+  scheme: http
+  store_app_id: dashboard
+  title:
+    custom: dashboard
+    en_us: Dashboard

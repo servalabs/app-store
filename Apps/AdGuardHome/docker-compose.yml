@@ -15,7 +15,7 @@ services:
         published: "531"
         protocol: udp
       - target: 3000
-        published: "3001"
+        published: "3050"
         protocol: tcp
       - target: 853
         published: "853"
@@ -78,4 +78,4 @@ x-casaos:
   title:
     en_us: Network Firewall
   index: /
-  port_map: "3001"
+  port_map: "3050"

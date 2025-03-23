@@ -9,7 +9,7 @@ services:
       - NC_AUTH_JWT_SECRET=899499fc-36a0-4131-b077-7bb9f051ac9b
       - NC_REDIS_URL=redis://default:casaos@big-bear-nocodb-redis:6379
     ports:
-      - "8080:8080"
+      - "8669:8080"
     volumes:
       - /files/.apps/$AppID/data:/usr/src/app/data
     networks:
@@ -79,4 +79,4 @@ x-casaos:
   title:
     en_us: Database App
   category: BigBearCasaOS
-  port_map: "8080"
+  port_map: "8669"
