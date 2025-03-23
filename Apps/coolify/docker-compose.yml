@@ -106,8 +106,7 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-    command:
-      ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "9e3df6aa-ea48-4e59-a9c4-59798f1ba9b4"]
+    command: [ ... ]
     environment:
       REDIS_PASSWORD: "9e3df6aa-ea48-4e59-a9c4-59798f1ba9b4"
     volumes:
@@ -147,17 +146,17 @@ x-casaos:
   architectures:
     - amd64
   main: big-bear-coolify
-  description:
-    en_us: App Manager is a self-hosted web-based platform for managing application deployments across your infrastructure. It simplifies setup, updates, and monitoring with a streamlined interface. Great for DevOps and server automation workflows.
-  tagline:
-    en_us: App Manager
-  developer: ServaLabs
   author: ServaLabs
+  developer: ServaLabs
+  category: BigBearCasaOS
+  description:
+    en_us: App Platform is a self-hosted PaaS that allows you to deploy and manage apps and services effortlessly. With database, Redis, and real-time socket support, it's ideal for managing production infrastructure in one place. Modern UI and scalable backend make it perfect for personal or enterprise use.
+  tagline:
+    en_us: Self-hosted app platform
+  title:
+    en_us: Deployer
   icon: "https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos/Apps/coolify/logo.png"
   thumbnail: ""
-  title:
-    en_us: One Click Deployer
-  category: BigBearCasaOS
   port_map: "8000"
   tips:
     before_install:
