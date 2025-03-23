@@ -17,7 +17,7 @@ services:
       - /files/.apps/$AppID/tessdata:/usr/share/tessdata
       - /files/.apps/$AppID/configs:/configs
     ports:
-      - "8080:8080"
+      - "8984:8080"
     x-casaos:
       envs:
         - container: "DOCKER_ENABLE_SECURITY"
@@ -73,4 +73,4 @@ x-casaos:
   title:
     en_us: PDF Editor
   category: BigBearCasaOS
-  port_map: "8080"
+  port_map: "8984"

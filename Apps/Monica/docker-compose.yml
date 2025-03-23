@@ -56,10 +56,7 @@ services:
             en_us: Set to false to enable new account sign-ups.
     ports:
       - target: 80
-        published: 80
-        protocol: tcp
-      - target: 443
-        published: 443
+        published: 7841
         protocol: tcp
     volumes:
       - type: bind
@@ -80,4 +77,4 @@ x-casaos:
   title:
     en_us: Relationship Manager
   category: LinuxServer.io
-  port_map: '80'
+  port_map: '7841'

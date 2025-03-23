@@ -36,8 +36,4 @@ x-casaos:
   title:
     en_us: Music Server
   category: Coolstore
-  tips:
-    before_install:
-      en_us: |
-        The default path of the music library is pointed to `/music`. If your music library is stored elsewhere, update the volume path in the settings.
   port_map: '4533'

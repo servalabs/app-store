@@ -118,9 +118,5 @@ x-casaos:
     en_us: |
       A powerful local NVR with AI detection. Designed for real-time camera monitoring and seamless smart home integration.
   thumbnail: https://raw.githubusercontent.com/mr-manuel/CasaOS-HomeAutomation-AppStore/latest/Apps/Frigate/icon.png
-  tips:
-    before_install:
-      en_us: |
-        This app uses ports `5000/tcp`, `8554/tcp`, `8555/tcp`, and `8555/udp`. Configure your cameras and detection rules after installation.
   title:
     en_us: AI Surveillance

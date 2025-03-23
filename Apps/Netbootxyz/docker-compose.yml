@@ -40,13 +40,13 @@ services:
             en_us: Specify a different internal port for the configuration UI
     ports:
       - target: 3000
-        published: 3000
+        published: 2507
         protocol: tcp
       - target: 69
         published: 69
         protocol: udp
       - target: 8080
-        published: 80
+        published: 8059
         protocol: tcp
     volumes:
       - type: bind
@@ -73,4 +73,4 @@ x-casaos:
   title:
     en_us: Net Boot
   category: LinuxServer.io
-  port_map: '8080'
+  port_map: '2507'

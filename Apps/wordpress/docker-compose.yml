@@ -3,7 +3,7 @@ services:
   app:
     image: wordpress:6.7.2
     ports:
-      - 8080:80
+      - 8452:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: casaos
@@ -81,4 +81,4 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: Website Builder
-  port_map: "8080"
+  port_map: "8452"
