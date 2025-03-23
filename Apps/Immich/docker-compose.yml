@@ -1,154 +1,157 @@
 name: big-bear-immich
 services:
+  database:
+    cpu_shares: 90
+    container_name: immich-postgres
+    deploy:
+      resources:
+        limits:
+          memory: 15759M
+    environment:
+      - PG_DATA=/var/lib/postgresql/data
+      - POSTGRES_DB=immich
+      - POSTGRES_PASSWORD=casaos
+      - POSTGRES_USER=casaos
+    hostname: immich-postgres
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /files/.apps/$AppID/pgdata
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    command: []
+    networks:
+      - big_bear_immich_network
+    privileged: false
+  immich-machine-learning:
+    cpu_shares: 90
+    container_name: immich-machine-learning
+    deploy:
+      resources:
+        limits:
+          memory: 15759M
+    environment:
+      - DB_DATABASE_NAME=casaos
+      - DB_HOSTNAME=immich-postgres
+      - DB_PASSWORD=casaos
+      - DB_PORT=5432
+      - DB_USERNAME=casaos
+      - REDIS_HOSTNAME=immich-redis
+    hostname: immich-machine-learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.129.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /files/.apps/$AppID/model-cache
+        target: /cache
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    command: []
+    networks:
+      - big_bear_immich_network
+    privileged: false
   immich-server:
+    cpu_shares: 90
     container_name: immich-server
+    depends_on:
+      database:
+        condition: service_started
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 15759M
+    environment:
+      - DB_DATABASE_NAME=immich
+      - DB_HOSTNAME=immich-postgres
+      - DB_PASSWORD=casaos
+      - DB_PORT=5432
+      - DB_USERNAME=casaos
+      - IMMICH_MACHINE_LEARNING_URL=http://immich-machine-learning:3003
+      - REDIS_HOSTNAME=immich-redis
+    hostname: immich-server
     image: ghcr.io/immich-app/immich-server:v1.129.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
     ports:
-      - 2283:2283
+      - mode: ingress
+        target: 2283
+        published: "2283"
+        protocol: tcp
+    restart: unless-stopped
     volumes:
       - /files/.backups/:/usr/src/app/upload/backups
-      - /files/30 Media:/usr/src/app/upload/library
+      - /files/30:/usr/src/app/upload/library
       - /files/.apps/$AppID/upload/encoded-video:/usr/src/app/upload/encoded-video
       - /files/.apps/$AppID/upload/profile:/usr/src/app/upload/profile
       - /files/.apps/$AppID/upload/thumbs:/usr/src/app/upload/thumbs
       - /files/.apps/$AppID/upload/upload:/usr/src/app/upload/upload
-    environment:
-      DB_HOSTNAME: immich-postgres
-      DB_USERNAME: casaos
-      DB_PASSWORD: casaos
-      DB_DATABASE_NAME: immich
-      DB_PORT: "5432"
-      REDIS_HOSTNAME: immich-redis
-      IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
-    depends_on:
-      - redis
-      - database
-    restart: unless-stopped
+    devices: []
+    cap_add: []
+    command: []
     networks:
       - big_bear_immich_network
-    x-casaos:
-      envs:
-        - container: DB_HOSTNAME
-          description:
-            en_us: "Database Hostname"
-        - container: DB_USERNAME
-          description:
-            en_us: "Database Username"
-        - container: DB_PASSWORD
-          description:
-            en_us: "Database Password"
-        - container: DB_DATABASE_NAME
-          description:
-            en_us: "Database Name"
-        - container: DB_PORT
-          description:
-            en_us: "Database Port"
-        - container: REDIS_HOSTNAME
-          description:
-            en_us: "Redis Hostname"
-        - container: IMMICH_MACHINE_LEARNING_URL
-          description:
-            en_us: "Immich Machine Learning URL"
-      volumes:
-        - container: /usr/src/app/upload
-          description:
-            en_us: "Container Path: /usr/src/app/upload"
-      ports:
-        - container: "2283"
-          description:
-            en_us: "Container Port: 2283"
-  immich-machine-learning:
-    container_name: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.129.0
-    volumes:
-      - /files/.apps/$AppID/model-cache:/cache
-    environment:
-      DB_HOSTNAME: immich-postgres
-      DB_USERNAME: casaos
-      DB_PASSWORD: casaos
-      DB_DATABASE_NAME: casaos
-      DB_PORT: 5432
-      REDIS_HOSTNAME: immich-redis
-    restart: unless-stopped
-    networks:
-      - big_bear_immich_network
-    x-casaos:
-      envs:
-        - container: DB_HOSTNAME
-          description:
-            en_us: "Database Hostname"
-        - container: DB_USERNAME
-          description:
-            en_us: "Database Username"
-        - container: DB_PASSWORD
-          description:
-            en_us: "Database Password"
-        - container: DB_DATABASE_NAME
-          description:
-            en_us: "Database Name"
-        - container: DB_PORT
-          description:
-            en_us: "Database Port"
-        - container: REDIS_HOSTNAME
-          description:
-            en_us: "Redis Hostname"
-      volumes:
-        - container: /cache
-          description:
-            en_us: "Container Path: /cache"
+    privileged: false
   redis:
+    cpu_shares: 90
     container_name: immich-redis
+    deploy:
+      resources:
+        limits:
+          memory: 15759M
+    hostname: immich-redis
     image: redis:6.2-alpine@sha256:70a7a5b641117670beae0d80658430853896b5ef269ccf00d1827427e3263fa3
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
     restart: always
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    command: []
+    environment: []
     networks:
       - big_bear_immich_network
-  database:
-    container_name: immich-postgres
-    image: tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
-    environment:
-      POSTGRES_PASSWORD: casaos
-      POSTGRES_USER: casaos
-      POSTGRES_DB: immich
-      PG_DATA: /var/lib/postgresql/data
-    volumes:
-      - /files/.apps/$AppID/pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
-    networks:
-      - big_bear_immich_network
-    x-casaos:
-      envs:
-        - container: POSTGRES_PASSWORD
-          description:
-            en_us: "Database Password"
-        - container: POSTGRES_USER
-          description:
-            en_us: "Database Username"
-        - container: POSTGRES_DB
-          description:
-            en_us: "Database Name"
-        - container: PG_DATA
-          description:
-            en_us: "Container Path: /var/lib/postgresql/data"
-      volumes:
-        - container: /var/lib/postgresql/data
-          description:
-            en_us: "Container Path: /var/lib/postgresql/data"
+    privileged: false
 networks:
   big_bear_immich_network:
+    name: big-bear-immich_big_bear_immich_network
     driver: bridge
 x-casaos:
   architectures:
     - amd64
-  main: immich-server
-  description:
-    en_us: A self-hosted photo and video gallery that lets you store, manage, and relive your memories privately. Gallery provides facial recognition, duplicate detection, and timeline views, all in a modern, user-friendly interface. It's optimized for home servers with optional machine learning enhancements.
-  tagline:
-    en_us: Gallery
-  developer: ServaLabs
   author: ServaLabs
+  category: BigBearCasaOS
+  description:
+    en_us: |
+      Gallery is a self-hosted, AI-powered photo and video management platform designed for privacy and speed. It uses machine learning for facial recognition and object tagging, offering automated organization of your media collection.
+      With mobile backups and a slick web UI, Gallery makes browsing and finding memories effortless. It's built for performance and supports high-resolution content, even on modest hardware setups.
+  developer: ServaLabs
+  hostname: ""
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+  index: /
+  is_uncontrolled: false
+  main: immich-server
+  port_map: "2283"
+  scheme: http
+  store_app_id: big-bear-immich
+  tagline:
+    en_us: Self-hosted photo and video gallery
   thumbnail: ""
   title:
     en_us: Gallery
-  category: BigBearCasaOS
-  port_map: "2283"
