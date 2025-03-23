@@ -41,8 +41,9 @@ services:
         source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /files/.apps/downloads
+        source: /files/Downloads
         target: /downloads
+      - type: bind
         source: /files/.apps/$AppID/theme
         target: /config
 x-casaos:

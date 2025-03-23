@@ -6,7 +6,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
-      TZ: $TZ
+      TZ: Asia/Kolkata
     x-casaos:
       envs:
         - container: PUID
@@ -27,21 +27,21 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/rustdesk/config
+        source: /files/.apps/$AppID/config
         target: /config
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: app
   description:
-    en_us: RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
+    en_us: Remote Access is a lightweight and secure self-hosted tool for desktop control and screen sharing. It offers end-to-end encryption and requires minimal setup. Ideal for remote support or accessing personal machines securely from anywhere.
   tagline:
-    en_us: A full-featured open source remote control alternative for self-hosting and security with minimal configuration.
-  developer: LinuxServer.io
-  author: WisdomSky
+    en_us: Secure and fast remote desktop access with end-to-end encryption.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/rustdesk-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/rustdesk-logo.png
   title:
-    en_us: Rustdesk
+    en_us: Remote Access
   category: LinuxServer.io
+  port_map: "3000"
