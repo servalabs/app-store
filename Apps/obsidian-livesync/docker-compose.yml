@@ -30,7 +30,7 @@ x-casaos:
   main: app
   description:
     en_us: |
-      Notes Sync Database is a self-hosted CouchDB instance designed for real-time syncing of markdown files across devices.
+      Obsidian Syncer is a self-hosted CouchDB instance designed for real-time syncing of markdown files across devices.
       Ideal for powering services like Obsidian LiveSync, it ensures a seamless, secure, and private sync experience.
       With easy deployment and minimal configuration, it's perfect for local-first note-taking workflows.
   tagline:
@@ -40,7 +40,7 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/obsidian.png
   thumbnail: ""
   title:
-    en_us: Notes Sync Database
+    en_us: Obsidian Syncer
   category: BigBearCasaOS
   port_map: "5984"
   tips:

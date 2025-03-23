@@ -51,7 +51,7 @@ x-casaos:
   category: Developer
   description:
     en_us: |
-      Code Repository is a lightweight, self-hosted solution for managing git repositories, collaborative development, and code reviews. It offers a clean web interface for source code browsing, issue tracking, and team collaboration. Ideal for small teams or individuals, it is easy to deploy and maintain. Features include SSH access, a built-in package registry, CI/CD support, and secure access control.
+      Code Repo is a lightweight, self-hosted solution for managing git repositories, collaborative development, and code reviews. It offers a clean web interface for source code browsing, issue tracking, and team collaboration. Ideal for small teams or individuals, it is easy to deploy and maintain. Features include SSH access, a built-in package registry, CI/CD support, and secure access control.
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.png
@@ -65,6 +65,6 @@ x-casaos:
       en_us: |
         When the App is installed, the first account registered will become the administrator account.
   title:
-    en_us: Code Repository
+    en_us: Code Repo
   index: /
   port_map: "3002"

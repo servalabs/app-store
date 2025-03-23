@@ -70,7 +70,7 @@ x-casaos:
     - amd64
   main: app
   description:
-    en_us: Contact-Manager is a self-hosted personal CRM that helps you keep track of the people in your life. It allows you to store detailed profiles, track interactions, and maintain important dates, giving you a better way to nurture relationships. Built for individuals who value connection, it's like having a digital rolodex with superpowers.
+    en_us: Relationship Manager is a self-hosted personal CRM that helps you keep track of the people in your life. It allows you to store detailed profiles, track interactions, and maintain important dates, giving you a better way to nurture relationships. Built for individuals who value connection, it's like having a digital rolodex with superpowers.
   tagline:
     en_us: Self-hosted personal relationship manager.
   developer: ServaLabs
@@ -78,6 +78,6 @@ x-casaos:
   icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png
   thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png
   title:
-    en_us: Contact-Manager
+    en_us: Relationship Manager
   category: LinuxServer.io
   port_map: '80'

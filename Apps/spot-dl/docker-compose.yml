@@ -28,15 +28,15 @@ x-casaos:
     - arm64
   main: app
   description:
-    en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
+    en_us: Spotify Downloader finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
   tagline:
-    en_us: spotDL finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
-  developer: spotDL
+    en_us: Spotify Downloader finds songs from Spotify playlists on YouTube and downloads them - along with album art, lyrics and metadata.
+  developer: Spotify Downloader
   author: WisdomSky
   icon: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
   thumbnail: https://cdn.jsdelivr.net/gh/WisdomSky/CasaOS-Coolstore@main/Apps/spot-dl/icon.svg
   title:
-    en_us: spotDL
+    en_us: Spotify Downloader
   tips:
     before_install:
       en_us: |

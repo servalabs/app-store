@@ -34,7 +34,7 @@ x-casaos:
   category: Developer
   description:
     en_us: |
-      Flow-Automator is a powerful low-code development tool for creating event-driven workflows. It provides a browser-based interface to design, deploy, and manage integrations between hardware devices, APIs, and services. With its visual editor and extensive node library, it's ideal for rapid prototyping and automating IoT or backend systems. Flow-Automator runs locally, giving you full control over your automation environment.
+      Flow Automator is a powerful low-code development tool for creating event-driven workflows. It provides a browser-based interface to design, deploy, and manage integrations between hardware devices, APIs, and services. With its visual editor and extensive node library, it's ideal for rapid prototyping and automating IoT or backend systems. Flow-Automator runs locally, giving you full control over your automation environment.
   developer: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
   screenshot_link:
@@ -46,6 +46,6 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/thumbnail.png
   tips: {}
   title:
-    en_us: Flow-Automator
+    en_us: Flow Automator
   index: /
   port_map: "1880"
