@@ -1,66 +1,34 @@
-# Configuration for changedetection setup
-
-# Name of the big-bear-changedetection application
 name: big-bear-changedetection
-
-# Service definitions for the big-bear-changedetection application
 services:
-  # Service name: big-bear-changedetection
-  # The `big-bear-changedetection` service definition
   big-bear-changedetection:
-    # Name of the container
     container_name: big-bear-changedetection
-
-    # Image to be used for the container
     image: ghcr.io/dgtlmoon/changedetection.io:0.49.6
-
-    # Container restart policy
     restart: unless-stopped
-
-    # Ports mapping between host and container
     ports:
-      # Mapping port 5000 of the host to port 5000 of the container
       - "5000:5000"
-
-    # Volumes to be mounted to the container
     volumes:
-      - /DATA/AppData/$AppID/datastore:/datastore
-
-    # environment:
-    #   - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/
-
-    x-casaos: # CasaOS specific configuration
+      - /files/.apps/$AppID/datastore:/datastore
+    x-casaos:
       ports:
         - container: "5000"
           description:
             en_us: "Container Port: 5000"
-
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: big-bear-changedetection
   description:
-    # Description in English
-    en_us: The best and simplest free open source website change detection, restock monitor and notification service.
+    en_us: |
+      Change Monitor helps you track changes across websites and online resources with ease. It's a lightweight, self-hosted tool that notifies you when content updates occur.
+      Ideal for tracking product restocks, document edits, or any web content change. Stay informed in real-time with a simple web interface and flexible notification options.
+      No cloud dependency – your data stays with you.
   tagline:
-    # Short description or tagline in English
-    en_us: Website change detection.
-  # Developer's name or identifier
-  developer: "dgtlmoon"
-  # Author of this configuration
-  author: BigBearTechWorld
-  # Icon for the application
+    en_us: Website content monitoring tool.
+  developer: ServaLabs
+  author: ServaLabs
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection-io.png
-  # Thumbnail image (currently empty)
   thumbnail: ""
   title:
-    # Title in English
-    en_us: Change Detection
-  # Application category
+    en_us: Change Detector
   category: BigBearCasaOS
-  # Port mapping information
   port_map: "5000"
