@@ -1,0 +1,86 @@
+services:
+  searxng:
+    container_name: searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    networks:
+      - searxng
+    ports:
+      - "4558:8080"
+    volumes:
+      - /files/.apps/$AppID/searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+      - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
+      - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_us: Web interface
+      volumes:
+        - container: /etc/searxng
+          description:
+            en_us: SearXNG configuration
+      description:
+        en_us: A self-hosted metasearch engine that aggregates results from multiple search engines, ensuring privacy and customizability. Ideal for users who want search results without tracking.
+      tagline:
+        en_us: Private metasearch engine
+      developer: ServaLabs
+      title:
+        en_us: Meta Search
+
+  redis:
+    container_name: redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    networks:
+      - searxng
+    volumes:
+      - /files/.apps/$AppID/redis:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  searxng:
+
+volumes:
+  valkey-data2:
+
+x-casaos:
+  architectures:
+    - amd64
+  main: searxng
+  author: ServaLabs
+  category: Internet
+  description:
+    en_us: A self-hosted metasearch engine that aggregates results from multiple search engines, ensuring privacy and customizability. Great for users who want to avoid tracking and personalize search experiences.
+  tagline:
+    en_us: Private Search engine
+  developer: ServaLabs
+  title:
+    en_us: Private Search Engine
+  port_map: "4558"
+  store_app_id: search-engine
+

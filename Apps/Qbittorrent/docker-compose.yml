@@ -45,7 +45,7 @@ services:
         target: /downloads
       - type: bind
         source: /files/.apps/$AppID/theme
-        target: /config
+        target: /theme
 x-casaos:
   architectures:
     - amd64
