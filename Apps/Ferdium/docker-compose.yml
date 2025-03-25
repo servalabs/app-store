@@ -24,7 +24,7 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/config
+        source: /files/.apps/$AppID/
         target: /config
 x-casaos:
   architectures:
