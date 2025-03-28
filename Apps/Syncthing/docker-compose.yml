@@ -33,14 +33,11 @@ services:
         protocol: udp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/config
+        source: /files/.apps/$AppID/
         target: /config
       - type: bind
-        source: /files/.apps/$AppID/data1
-        target: /data1
-      - type: bind
-        source: /files/.apps/$AppID/data2
-        target: /data2
+        source: /files
+        target: /files
     container_name: app
 x-casaos:
   architectures:
