@@ -1,0 +1,38 @@
+name: nextcloud
+services:
+  nextcloud:
+    container_name: nextcloud
+    environment:
+      - NEXTCLOUD_DATA_DIR=/var/www/html/data
+      - NEXTCLOUD_TRUSTED_DOMAINS=atom1
+    hostname: nextcloud
+    image: nextcloud:latest
+    ports:
+      - target: 80
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /files/.apps/$AppID/data
+        target: /var/www/html
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:
+    - amd64
+  main: nextcloud
+  author: ServaLabs
+  developer: ServaLabs
+  category: self
+  description:
+    en_us: |
+      Private Cloud is a powerful self-hosted file storage and collaboration platform. It allows users to securely store, share, and access files from any device with a web interface. Ideal for teams and personal use, it features user management, versioning, calendars, and contacts. It's an excellent alternative to public cloud services, giving you full data control.
+  icon: https://static-00.iconduck.com/assets.00/nextcloud-icon-512x512-9r19op3c.png
+  index: /
+  is_uncontrolled: false
+  port_map: "8080"
+  scheme: http
+  store_app_id: nextcloud
+  title:
+    en_us: Private Cloud
