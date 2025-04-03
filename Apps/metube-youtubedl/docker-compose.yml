@@ -1,0 +1,38 @@
+name: metube-youtubedl
+services:
+  app:
+    image: alexta69/metube:2025-03-22
+    restart: unless-stopped
+    environment:
+      UID: $PUID
+      GID: $PGID
+      DARK_MODE: true
+    x-casaos:
+      envs: []
+    ports:
+      - target: 8081
+        published: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /files/Downloads
+        target: /downloads
+x-casaos:
+  architectures:
+    - amd64
+  main: app
+  author: ServaLabs
+  developer: ServaLabs
+  category: Coolstore
+  description:
+    en_us: |
+      Video Downloader is a user-friendly web GUI for downloading videos using youtube-dl. 
+      It supports playlists and a wide range of sites, allowing users to easily grab content from YouTube and beyond. 
+      Designed for simplicity and dark mode support, it’s a powerful tool for managing personal media collections.
+  tagline:
+    en_us: Web GUI for downloading videos and playlists from YouTube and other platforms.
+  icon: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/ytdlm.png
+  thumbnail: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/ytdlm.png
+  title:
+    en_us: YouTube Downloader
+  port_map: '8081'
