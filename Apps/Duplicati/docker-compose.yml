@@ -39,11 +39,8 @@ services:
         source: /files/.apps/$AppID/config
         target: /config
       - type: bind
-        source: /files/.apps/$AppID/backups
-        target: /backups
-      - type: bind
-        source: /files/.apps/$AppID/source
-        target: /source
+        source: /files
+        target: /files
 x-casaos:
   architectures:
     - amd64
