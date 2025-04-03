@@ -24,7 +24,7 @@ services:
 x-casaos:
   architectures:
     - amd64
-  author: self
+  author: Self
   category: self
   hostname: ""
   icon: https://static-00.iconduck.com/assets.00/homarr-icon-1024x693-nfs9morv.png
@@ -34,5 +34,5 @@ x-casaos:
   scheme: http
   store_app_id: dashboard
   title:
-    custom: dashboard
+    custom: Dashboard
     en_us: Dashboard

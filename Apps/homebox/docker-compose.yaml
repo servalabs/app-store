@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /files/.apps/homebox/data
+        source: /files/.apps/$AppID/data
         target: /data
     x-casaos:
       ports:
@@ -44,14 +44,10 @@ x-casaos:
   category: Management
   description:
     en_us: >
-      Homebox is a self-hosted inventory and asset management system designed
-      for home users. 
-
-      It lets you track and manage household items, electronic devices, tools, and other belongings using a clean web interface.
-
-      With easy categorization, search, and tagging features, it's an ideal solution for organizing your home inventory. 
-
-      Keep records of serial numbers, warranties, and purchase dates securely and accessibly.
+      Inventory Manager is a self-hosted tool for organizing and tracking household items, electronics, tools, and other assets.
+      With a clean web interface, it enables easy categorization, tagging, and search functionality.
+      It's ideal for keeping track of serial numbers, warranties, and purchase details in one accessible place.
+      Designed for personal home use with simple setup and powerful features.
   developer: ServaLabs
   hostname: ""
   icon: https://homebox.software/lilbox.svg
@@ -62,7 +58,7 @@ x-casaos:
   scheme: http
   store_app_id: homebox
   tagline:
-    en_us: Personal Inventory Management for Your Home
+    en_us: Personal Inventory Management System
   title:
     custom: ""
     en_us: Inventory Manager

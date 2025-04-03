@@ -1,5 +1,4 @@
 name: big-bear-appsmith
-name: big-bear-appsmith
 services:
    appsmith:
      image: index.docker.io/appsmith/appsmith-ce
