@@ -1,0 +1,62 @@
+name: big-bear-scrutiny
+services:
+  big-bear-scrutiny:
+    container_name: big-bear-scrutiny
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    restart: unless-stopped
+    volumes:
+      - /files/.apps/$AppID/config:/opt/scrutiny/config
+      - /files/.apps/$AppID/influxdb:/opt/scrutiny/influxdb
+      - /run/udev:/run/udev:ro
+    ports:
+      - "38080:8080"
+      - "38086:8086"
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/sda:/dev/sda
+      - /dev/nvme0:/dev/nvme0
+    privileged: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-casaos:
+      volumes:
+        - container: "/opt/scrutiny/config"
+          description:
+            en_us: "Container Path: /opt/scrutiny/config"
+        - container: "/opt/scrutiny/influxdb"
+          description:
+            en_us: "Container Path: /opt/scrutiny/influxdb"
+        - container: "/run/udev"
+          description:
+            en_us: "Container Path: /run/udev"
+      ports:
+        - container: "8080"
+          description:
+            en_us: "Container Port: 8080"
+        - container: "8086"
+          description:
+            en_us: "Container Port: 8086"
+x-casaos:
+  architectures:
+    - amd64
+  main: big-bear-scrutiny
+  description:
+    en_us: |
+      Disk Health is a self-hosted S.M.A.R.T monitoring tool that provides real-time disk diagnostics and performance metrics.
+      It uses modern, web-based dashboards to visualize drive health, detect early signs of hardware failure, and track historical trends.
+      Ideal for NAS or server environments, Disk-Health supports multiple drive types including SATA and NVMe, and integrates with InfluxDB for time-series data.
+  tagline:
+    en_us: Monitor drive health with SMART metrics
+  developer: ServaLabs
+  author: ServaLabs
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/scrutiny.png
+  thumbnail: ""
+  title:
+    en_us: Disk Health
+  category: BigBearCasaOS
+  port_map: "38080"

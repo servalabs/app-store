@@ -1,0 +1,61 @@
+name: linuxserver-pairdrop
+services:
+  app:
+    image: linuxserver/pairdrop:1.11.2
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: Asia/Kolkata
+      RATE_LIMIT: ''
+      WS_FALLBACK: ''
+      RTC_CONFIG: ''
+      DEBUG_MODE: ''
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: RATE_LIMIT
+          description:
+            en_us: Set to true to limit clients to 100 requests per 5 min
+        - container: WS_FALLBACK
+          description:
+            en_us: Set to true to enable websocket fallback if the peer to peer WebRTC connection is not available to the client (see App Setup notes).
+        - container: RTC_CONFIG
+          description:
+            en_us: Path to a json file containing custom STUN/TURN config (see App Setup notes)
+        - container: DEBUG_MODE
+          description:
+            en_us: Set to true to debug the http server configuration by logging clients IP addresses used by PairDrop to STDOUT. See here for more info. Do not use in production!
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /files/.apps/$AppID/config
+        target: /config
+x-casaos:
+  architectures:
+    - amd64
+  main: app
+  description:
+    en_us: |
+      File-Sender allows seamless and secure peer-to-peer file sharing across local networks or paired devices, regardless of platform. It is a sleek, self-hosted alternative to AirDrop, requiring no registration or external server. Share documents, images, or notes quickly with full privacy control.
+  tagline:
+    en_us: Peer-to-peer file sharing for all platforms.
+  developer: ServaLabs
+  author: ServaLabs
+  icon: https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png
+  thumbnail: https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png
+  title:
+    en_us: File-Sender
+  category: LinuxServer.io
+  port_map: "3000"

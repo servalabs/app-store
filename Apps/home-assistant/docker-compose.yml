@@ -1,0 +1,42 @@
+name: big-bear-home-assistant
+services:
+  app:
+    container_name: big-bear-home-assistant
+    image: ghcr.io/home-assistant/home-assistant:2025.3.4
+    restart: unless-stopped
+    volumes:
+      - /files/.apps/$AppID/config:/config
+      - /files/.apps/$AppID/localtime:/etc/localtime:ro
+      - /files/.apps/$AppID/dbus:/run/dbus:ro
+    network_mode: host
+
+    x-casaos:
+      volumes:
+        - container: /config
+          description:
+            en_us: "Container Path: /config"
+        - container: /etc/localtime
+          description:
+            en_us: "Container Path: /etc/localtime"
+        - container: /run/dbus
+          description:
+            en_us: "Container Path: /run/dbus"
+x-casaos:
+  architectures:
+    - amd64
+  main: app
+  description:
+    en_us: |
+      Smart-Home-Controller is a robust, open-source platform that enables home automation through seamless device integration and intelligent control. It supports a wide range of smart home devices, offering privacy-focused, local processing without relying on the cloud.
+      This makes it ideal for self-hosting enthusiasts seeking automation, security, and flexibility in managing their home environment.
+      With its powerful automation engine and customizable dashboard, users can tailor their smart home experience with precision and ease.
+  tagline:
+    en_us: Automate your home smartly
+  developer: ServaLabs
+  author: ServaLabs
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/home-assistant.png
+  thumbnail: ""
+  title:
+    en_us: Smart Controller
+  category: BigBearCasaOS
+  port_map: "8123"
