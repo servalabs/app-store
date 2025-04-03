@@ -1,0 +1,38 @@
+name: swingmusic
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic@sha256:e6ccef307ebeadac967de0565b75e4906615ecfaac2a8f6bb82be13f111439d5
+    container_name: swingmusic
+    volumes:
+      - type: bind
+        source: /files/.apps/$AppID/config
+        target: /config
+      - type: bind
+        source: /files/40 Entertainment/43 Music
+        target: /music
+    ports:
+      - "1970:1970"
+    restart: unless-stopped
+x-casaos:
+  architectures:
+    - amd64
+  main: swingmusic
+  author: ServaLabs
+  category: Media
+  description:
+    en_us: |
+      Music Player is a sleek, self-hosted music streaming server, ideal for users who want to enjoy their personal music library from anywhere. It delivers a smooth, Spotify-like experience without third-party limitations. Designed for performance and style, it supports high-quality playback and playlist management. Perfect for audiophiles seeking full control over their collection.
+  developer: ServaLabs
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/screenshot-5.png
+  tagline:
+    en_us: A beautiful, self-hosted music streaming server for your personal library.
+  title:
+    en_us: Music Player
+  index: /
+  port_map: "1970"

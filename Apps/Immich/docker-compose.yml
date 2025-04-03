@@ -68,7 +68,7 @@ services:
       - DB_USERNAME=postgres
     hostname: immich-machine-learning
     healthcheck: {}
-    image: altran1502/immich-machine-learning:v1.129.0
+    image: ghcr.io/immich-app/immich-machine-learning:v1.131.2
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.png
     restart: unless-stopped
@@ -109,7 +109,7 @@ services:
       - DB_USERNAME=postgres
     hostname: immich-server
     healthcheck: {}
-    image: altran1502/immich-server:v1.129.0
+    image: ghcr.io/immich-app/immich-server:v1.131.3
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.png
     ports:
@@ -135,7 +135,7 @@ services:
         target: /usr/src/app/upload/library
       - type: bind
         source: /files/.backups
-        target: /usr/src/app/backups
+        target: /usr/src/app/upload/backups
     cap_add: []
     networks:
       - immich
