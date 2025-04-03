@@ -1,61 +1,49 @@
-name: linuxserver-jellyfin
+name: jellyfin-tmc
 services:
   app:
-    image: linuxserver/jellyfin:10.10.6
-    restart: unless-stopped
+    container_name: jellyfin
+    image: jellyfin/jellyfin
     environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: Asia/Kolkata
-      JELLYFIN_PublishedServerUrl: ''
-    x-casaos:
-      envs:
-        - container: PUID
-          description:
-            en_us: for UserID
-        - container: PGID
-          description:
-            en_us: for GroupID
-        - container: TZ
-          description:
-            en_us: specify a timezone to use, see this list.
-        - container: JELLYFIN_PublishedServerUrl
-          description:
-            en_us: Set the autodiscovery response domain or IP address, include http(s)://.
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
     ports:
       - target: 8096
-        published: 8096
+        published: ${WEBUI_PORT:-8096}
         protocol: tcp
-      - target: 8920
-        published: 8920
-        protocol: tcp
-      - target: 7359
-        published: 7359
-        protocol: udp
-      - target: 1900
-        published: 1900
-        protocol: udp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/
+        source: /DATA/AppData/TMC-Store/$AppID/config
         target: /config
       - type: bind
-        source: /files/40 Entertainment
-        target: /data/
+        source: /DATA/AppData/TMC-Store/$AppID/cache
+        target: /cache
+      - type: bind
+        source: /DATA/Media
+        target: /media
+    restart: unless-stopped
+    privileged: false
+
 x-casaos:
   architectures:
     - amd64
-  main: app
-  author: ServaLabs
-  developer: ServaLabs
-  category: LinuxServer.io
+    - arm
+    - arm64
+  author: jellyfin
+  category: TMCstore
   description:
-    en_us: |
-      Media Server is a powerful, open-source platform for organizing, managing, and streaming personal media libraries. It allows you to stream your video, music, and TV shows to a variety of devices from your own server. With full cross-platform support and no premium restrictions, it's ideal for home media enthusiasts seeking control and flexibility.
+    en_us: Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps.
+  developer: Jellyfin
+  icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/jellyfin/icon.png
+  index: /
+  main: app
+  port_map: ${WEBUI_PORT:-8096}
+  scheme: http
   tagline:
-    en_us: Open-source media server for streaming and managing your content.
-  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
-  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png
+    en_us: Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps.
+  store_app_id: jellyfin-tmc
   title:
-    en_us: Media Server
-  port_map: "8096"
+    en_us: Jellyfin
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/jellyfin/screenshot-01.png
+  thumbnail: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/jellyfin/thumbnail.png

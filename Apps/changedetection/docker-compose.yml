@@ -1,34 +1,74 @@
-name: big-bear-changedetection
+name: changedetection-tmc
+
 services:
-  big-bear-changedetection:
-    container_name: big-bear-changedetection
-    image: ghcr.io/dgtlmoon/changedetection.io:0.49.6
+  browserless-chrome:
+    container_name: browserless-chrome
+    hostname: browserless-chrome
+    environment:
+      - CHROME_REFRESH_TIME=1200000
+      - CONNECTION_TIMEOUT=450000
+      - DEFAULT_STEALTH=true
+      - ENABLE_DEBUGGER=true
+      - MAX_CONCURRENT_SESSIONS=4
+      - PREBOOT_CHROME=true
+      - SCREEN_DEPTH=16
+      - SCREEN_HEIGHT=820
+      - SCREEN_WIDTH=375
+    image: browserless/chrome
     restart: unless-stopped
+    networks:
+      - changedetection
+    privileged: false
+
+  app:
+    environment:
+      - BASE_URL=https://google.com
+      - HIDE_REFERER=false
+      - PLAYWRIGHT_DRIVER_URL=ws://browserless-chrome:3000/?stealth
+      - USE_X_SETTINGS=1
+      - WEBDRIVER_URL=http://browserless-chrome:4444/wd/hub
+    image: ghcr.io/dgtlmoon/changedetection.io:dev
     ports:
-      - "5000:5000"
+      - target: 5000
+        published: ${WEBUI_PORT:-5000}
+        protocol: tcp
+    restart: unless-stopped
     volumes:
-      - /files/.apps/$AppID/datastore:/datastore
-    x-casaos:
-      ports:
-        - container: "5000"
-          description:
-            en_us: "Container Port: 5000"
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/data
+        target: /datastore
+    depends_on:
+      - browserless-chrome
+    networks:
+      - changedetection
+    privileged: false
+    container_name: changedetection
+    hostname: changedetection
+
+networks:
+  changedetection:
+    name: changedetection
+
 x-casaos:
+  main: app
   architectures:
     - amd64
-  main: big-bear-changedetection
+    - arm
+    - arm64
+  author: TMC
+  category: TMCstore
   description:
-    en_us: |
-      Change Monitor helps you track changes across websites and online resources with ease. It's a lightweight, self-hosted tool that notifies you when content updates occur.
-      Ideal for tracking product restocks, document edits, or any web content change. Stay informed in real-time with a simple web interface and flexible notification options.
-      No cloud dependency – your data stays with you.
+    en_us: From simply monitoring website pages that have a change (such as watching prices, restock notification), to deep inspection such as PDF text support, JSON and XML monitoring and extensive text triggers.
+  developer: ""
+  icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/changedetection/icon.png
+  index: /
+  port_map: ${WEBUI_PORT:-5000}
+  scheme: http
   tagline:
-    en_us: Website content monitoring tool.
-  developer: ServaLabs
-  author: ServaLabs
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection-io.png
-  thumbnail: ""
+    en_us: From simply monitoring websites to deep inspection.
+  store_app_id: changedetection-tmc
   title:
-    en_us: Change Detector
-  category: BigBearCasaOS
-  port_map: "5000"
+    en_us: Changedetection.io + Playwright
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/changedetection/screenshot-01.png
+  thumbnail: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/changedetection/thumbnail.png

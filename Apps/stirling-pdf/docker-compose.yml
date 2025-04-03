@@ -1,76 +1,48 @@
-name: big-bear-stirling-pdf
+name: stirling-pdf-tmc
 services:
-  big-bear-stirling-pdf:
-    container_name: big-bear-stirling-pdf
-    image: stirlingtools/stirling-pdf:0.44.2
-    restart: unless-stopped
+  app:
+    container_name: stirling-pdf
+    image: frooodle/s-pdf:latest
     environment:
-      - DOCKER_ENABLE_SECURITY=false
-      - SECURITY_ENABLE_LOGIN=true
-      - SECURITY_INITIALLOGIN_USERNAME=bigbear
-      - SECURITY_INITIALLOGIN_PASSWORD=4500733e-a0f8-4605-a712-fd267404956a
-      - CSRF_DISABLED=false
-      - DEFAULT_LOCALE=en-US
-      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
-      - LANGS=en_US
-    volumes:
-      - /files/.apps/$AppID/tessdata:/usr/share/tessdata
-      - /files/.apps/$AppID/configs:/configs
+      - DOCKER_ENABLE_SECURITY=true
     ports:
-      - "8984:8080"
-    x-casaos:
-      envs:
-        - container: "DOCKER_ENABLE_SECURITY"
-          description:
-            en_us: "Enable Security Jar for Authentication"
-        - container: "SECURITY_ENABLE_LOGIN"
-          description:
-            en_us: "Enable Login for Authentication"
-        - container: "SECURITY_INITIALLOGIN_USERNAME"
-          description:
-            en_us: "Initial admin username"
-        - container: "SECURITY_INITIALLOGIN_PASSWORD"
-          description:
-            en_us: "Initial admin password"
-        - container: "CSRF_DISABLED"
-          description:
-            en_us: "Disable CSRF Protection"
-        - container: "DEFAULT_LOCALE"
-          description:
-            en_us: "Set Default Locale"
-        - container: "INSTALL_BOOK_AND_ADVANCED_HTML_OPS"
-          description:
-            en_us: "Install Book and Advanced HTML Ops"
-        - container: "LANGS"
-          description:
-            en_us: "Languages"
-      volumes:
-        - container: "/usr/share/tessdata"
-          description:
-            en_us: "Container Path: /usr/share/tessdata"
-        - container: "/configs"
-          description:
-            en_us: "Configuration Files Path: /configs"
-      ports:
-        - container: "8080"
-          description:
-            en_us: "Container Port: 8080"
+      - target: 8080
+        published: ${WEBUI_PORT:-8080}
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/training-data
+        target: /usr/share/tesseract-ocr/4.00/tessdata
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/configs
+        target: /configs
+    restart: unless-stopped
+    privileged: false
+
 x-casaos:
   architectures:
     - amd64
-  main: big-bear-stirling-pdf
+    - arm
+    - arm64
+  author: stirling-pdf
+  category: TMCstore
   description:
-    en_us: |
-      PDF Editor is a modern, self-hosted tool that allows users to convert, manipulate, and manage PDFs locally via a sleek web interface.
-      It supports OCR, localization, and optional book conversion functionality with configurable security settings.
-      Ideal for teams or individuals who need robust PDF capabilities without relying on cloud services.
+    en_us: This is a powerful locally hosted web based PDF manipulation tool using docker that allows you to perform various operations on PDF files, such as splitting merging, converting, reorganizing, adding images, rotating, compressing, and more.
+  developer: stirling-pdf
+  icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/stirling-pdf/icon.png
+  index: /
+  main: app
+  port_map: ${WEBUI_PORT:-8080}
+  scheme: http
   tagline:
-    en_us: Local PDF conversion and editing
-  developer: ServaLabs
-  author: ServaLabs
-  icon: "https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos/Apps/stirling-pdf/logo.png"
-  thumbnail: ""
+    en_us: This is a powerful locally hosted web based PDF manipulation tool using docker that allows you to perform various operations on PDF files, such as splitting merging, converting, reorganizing, adding images, rotating, compressing, and more.
+  store_app_id: stirling-pdf-tmc
+  tips:
+    custom: |-
+      Username ```admin``` <br />
+      Password ```stirling```
   title:
-    en_us: PDF Editor
-  category: BigBearCasaOS
-  port_map: "8984"
+    en_us: stirling-pdf
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/stirling-pdf/screenshot-01.png
+  thumbnail: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/stirling-pdf/thumbnail.png
