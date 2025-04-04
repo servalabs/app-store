@@ -16,12 +16,7 @@ services:
       - shared_buffers=512MB
       - -c
       - wal_compression=on
-    container_name: immich-postgres
-    deploy:
-      resources:
-        limits:
-          memory: 15759M
-    environment:
+    container_name: immich-postgress
       - POSTGRES_DB=immich
       - POSTGRES_INITDB_ARGS=--data-checksums
       - POSTGRES_PASSWORD=postgres
