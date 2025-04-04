@@ -4,7 +4,6 @@ services:
     container_name: nextcloud
     environment:
       - NEXTCLOUD_DATA_DIR=/var/www/html/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=atom1
     hostname: nextcloud
     image: nextcloud:latest
     ports:
