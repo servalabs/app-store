@@ -57,5 +57,5 @@ x-casaos:
   thumbnail: https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png
   title:
     en_us: File-Sender
-  category: LinuxServer.io
+  category: Utility
   port_map: "3000"

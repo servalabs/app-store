@@ -23,7 +23,7 @@ x-casaos:
   main: app
   author: ServaLabs
   developer: ServaLabs
-  category: Coolstore
+  category: Internet
   description:
     en_us: |
       Video Downloader is a user-friendly web GUI for downloading videos using youtube-dl. 
