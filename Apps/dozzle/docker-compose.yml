@@ -1,0 +1,36 @@
+name: big-bear-dozzle
+services:
+  app:
+    container_name: big-bear-dozzle
+    image: amir20/dozzle:v8.11.9
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8888:8080"
+    x-casaos:
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_us: "Container Path: /var/run/docker.sock"
+      ports:
+        - container: "8080"
+          description:
+            en_us: "Container Port: 8080"
+x-casaos:
+  architectures:
+    - amd64
+  main: app
+  author: ServaLabs
+  developer: ServaLabs
+  category: Maintainance
+  title:
+    en_us: Log Viewer
+  description:
+    en_us: |
+      Log Viewer is a real-time log monitoring tool for Docker containers. It provides an intuitive web interface to view and filter container logs live without needing any CLI. Ideal for developers and self-hosters who want instant feedback and debugging insights.
+  tagline:
+    en_us: Real-time Docker log monitoring.
+  icon: https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos/Apps/dozzle/logo.png
+  thumbnail: ""
+  port_map: "8888"
