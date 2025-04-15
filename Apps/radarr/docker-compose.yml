@@ -1,0 +1,45 @@
+name: radarr-tmc
+services:
+  app:
+    container_name: radarr
+    image: lscr.io/linuxserver/radarr:develop
+    ports:
+      - target: 7878
+        published: ${WEBUI_PORT:-7878}
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media
+    restart: unless-stopped
+    privileged: false
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  author: radarr
+  category: TMCstore
+  description:
+    en_us: Radarr is a movie collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new movies and will interface with clients and indexers to grab, sort, and rename them. It can also be configured to automatically upgrade the quality of existing files in the library when a better quality format becomes available.
+  developer: radarr
+  icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/icon.png
+  index: /
+  main: app
+  port_map: ${WEBUI_PORT:-7878}
+  scheme: http
+  tagline:
+    en_us: Radarr is a movie collection manager for Usenet and BitTorrent users.
+  store_app_id: radarr-tmc
+  title:
+    en_us: Radarr v4+
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/screenshot-01.png
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/screenshot-02.png
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/screenshot-03.png
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/screenshot-04.png
+  thumbnail: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/radarr/thumbnail.png

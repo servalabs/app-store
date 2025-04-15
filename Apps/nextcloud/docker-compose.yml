@@ -1,172 +1,210 @@
-name: private-cloud
-
+name: nextcloud-tmc
 services:
-  private-cloud:
-    container_name: private-cloud
-    image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
-    restart: unless-stopped
+  db:
+    image: mariadb:10.5
+    container_name: nextcloud-db
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_PASSWORD=nextcloud
+      - MYSQL_USER=nextcloud
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        target: /var/lib/mysql
+    networks:
+      - nextcloud
+    privileged: false
+
+  redis:
+    image: redis:6-alpine
+    container_name: nextcloud-redis
+    environment:
+      - TZ=Europe/Paris
+    restart: always
+    networks:
+      - nextcloud
+    privileged: false
+  
+  msmtpd:
+    image: crazymax/msmtpd:latest
+    container_name: nextcloud-msmtpd
+    environment:
+      - SMTP_AUTH=on
+      - SMTP_FROM=foo@gmail.com
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PASSWORD=bar
+      - SMTP_PORT=587
+      - SMTP_STARTTLS=on
+      - SMTP_TLS=on
+      - SMTP_TLS_CHECKCERT=on
+      - SMTP_USER=foo
+      - TZ=Europe/Paris
+      - HSTS_HEADER=max-age=15768000; includeSubDomains
+      - LOG_IP_VAR=remote_addr
+      - MEMORY_LIMIT=512M
+      - OPCACHE_MEM_SIZE=128
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
+      - RP_HEADER=strict-origin
+      - UPLOAD_MAX_SIZE=512M
+    restart: always
+    networks:
+      - nextcloud
+    privileged: false
+
+  nextcloud:
+    image: crazymax/nextcloud:latest
+    container_name: nextcloud
+    depends_on:
+      - db
+      - msmtpd
+      - redis
+    environment:
+      - TZ=$TZ
+      - PGID=$PGID
+      - PUID=$PUID
+      - APC_SHM_SIZE=128M
+      - DB_HOST=nextcloud-db
+      - DB_NAME=nextcloud
+      - DB_PASSWORD=nextcloud
+      - DB_TYPE=mysql
+      - DB_USER=nextcloud
+      - HSTS_HEADER=max-age=15768000; includeSubDomains
+      - LOG_IP_VAR=remote_addr
+      - MEMORY_LIMIT=512M
+      - OPCACHE_MEM_SIZE=128
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
+      - RP_HEADER=strict-origin
+      - UPLOAD_MAX_SIZE=512M
     ports:
-      - 7580:80
+      - target: 8000
+        published: ${WEBUI_PORT:-8000}
+        protocol: tcp
+    restart: always
     volumes:
-      - /files/.apps/$AppID/html:/var/www/html
-    environment:
-      - POSTGRES_HOST=private-cloud-db
-      - REDIS_HOST=private-cloud-redis
-      - POSTGRES_PASSWORD=casaos
-      - POSTGRES_USER=casaos
-      - POSTGRES_DB=nextcloud
-      - NEXTCLOUD_ADMIN_USER=admin
-      - NEXTCLOUD_ADMIN_PASSWORD=admin
-      - TRUSTED_PROXIES=
-      - OVERWRITEPROTOCOL=http
-      - PHP_MEMORY_LIMIT=1024M
-      - PHP_UPLOAD_LIMIT=1024M
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/data
+        target: /data
+    networks:
+      - nextcloud
+    privileged: false
+  
+  cron:
+    image: crazymax/nextcloud:latest
+    container_name: nextcloud-cron
     depends_on:
-      private-cloud-db:
-        condition: service_healthy
-      private-cloud-redis:
-        condition: service_healthy
-    networks:
-      - private_cloud_network
-    x-casaos:
-      volumes:
-        - container: /var/www/html
-          description:
-            en_us: "Container Path: /var/www/html"
-      envs:
-        - container: POSTGRES_HOST
-          description:
-            en_us: Database host
-        - container: REDIS_HOST
-          description:
-            en_us: Redis host
-        - container: POSTGRES_PASSWORD
-          description:
-            en_us: Database password
-        - container: POSTGRES_USER
-          description:
-            en_us: Database user
-        - container: POSTGRES_DB
-          description:
-            en_us: Database type
-        - container: NEXTCLOUD_ADMIN_USER
-          description:
-            en_us: Nextcloud admin user
-        - container: NEXTCLOUD_ADMIN_PASSWORD
-          description:
-            en_us: Nextcloud admin password
-        - container: TRUSTED_PROXIES
-          description:
-            en_us: Trusted proxies
-        - container: OVERWRITEPROTOCOL
-          description:
-            en_us: Overwrite protocol
-        - container: PHP_UPLOAD_LIMIT
-          description:
-            en_us: PHP upload limit
-      ports:
-        - container: "7580"
-          description:
-            en_us: "Container Port: 7580"
-
-  private-cloud-db:
-    container_name: private-cloud-db
-    image: postgres:14.2
-    restart: unless-stopped
-    volumes:
-      - /files/.apps/$AppID/pgdata:/var/lib/postgresql/data
+      - nextcloud
     environment:
-      - POSTGRES_PASSWORD=casaos
-      - POSTGRES_USER=casaos
-      - POSTGRES_DB=nextcloud
-    networks:
-      - private_cloud_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U casaos -d nextcloud"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    x-casaos:
-      volumes:
-        - container: /var/lib/postgresql/data
-          description:
-            en_us: "Container Path: /var/lib/postgresql/data"
-      envs:
-        - container: POSTGRES_PASSWORD
-          description:
-            en_us: Database password
-        - container: POSTGRES_USER
-          description:
-            en_us: Database user
-        - container: POSTGRES_DB
-          description:
-            en_us: Database type
-
-  private-cloud-redis:
-    container_name: private-cloud-redis
-    user: "1000:1000"
-    image: redis:6.2.6
-    restart: on-failure
+      - CRON_PERIOD=*/5 * * * *
+      - SIDECAR_CRON=1
+      - TZ=Europe/Paris
+      - HSTS_HEADER=max-age=15768000; includeSubDomains
+      - LOG_IP_VAR=remote_addr
+      - MEMORY_LIMIT=512M
+      - OPCACHE_MEM_SIZE=128
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
+      - RP_HEADER=strict-origin
+      - UPLOAD_MAX_SIZE=512M
+    restart: always
     volumes:
-      - /files/.apps/$AppID/redis:/data
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/data
+        target: /data
     networks:
-      - private_cloud_network
-    healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    x-casaos:
-      volumes:
-        - container: /data
-          description:
-            en_us: "Container Path: /data"
-      ports:
-        - container: "6379"
-          description:
-            en_us: "Container Port: 6379"
-
-  private-cloud-cron:
-    container_name: private-cloud-cron
-    image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
-    restart: on-failure
-    volumes:
-      - /files/.apps/$AppID/html:/var/www/html
-    entrypoint: /cron.sh
+      - nextcloud
+    privileged: false
+  
+  previewgen:
+    image: crazymax/nextcloud:latest
+    container_name: nextcloud-previewgen
     depends_on:
-      private-cloud-db:
-        condition: service_healthy
-      private-cloud-redis:
-        condition: service_healthy
+      - nextcloud
+    environment:
+      - PREVIEWGEN_PERIOD=0 * * * *
+      - SIDECAR_PREVIEWGEN=1
+      - TZ=Europe/Paris
+      - HSTS_HEADER=max-age=15768000; includeSubDomains
+      - LOG_IP_VAR=remote_addr
+      - MEMORY_LIMIT=512M
+      - OPCACHE_MEM_SIZE=128
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
+      - RP_HEADER=strict-origin
+      - UPLOAD_MAX_SIZE=512M
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        target: /var/lib/mysql
     networks:
-      - private_cloud_network
-    x-casaos:
-      volumes:
-        - container: /var/www/html
-          description:
-            en_us: "Container Path: /var/www/html"
+      - nextcloud
+    privileged: false
+
+  news_updater:
+    image: crazymax/nextcloud:latest
+    container_name: nextcloud-news-updater
+    depends_on:
+      - nextcloud
+    environment:
+      - NC_NEWSUPDATER_INTERVAL=900
+      - NC_NEWSUPDATER_LOGLEVEL=error
+      - NC_NEWSUPDATER_THREADS=10
+      - NC_NEWSUPDATER_TIMEOUT=300
+      - SIDECAR_NEWSUPDATER=1
+      - TZ=Europe/Paris
+      - HSTS_HEADER=max-age=15768000; includeSubDomains
+      - LOG_IP_VAR=remote_addr
+      - MEMORY_LIMIT=512M
+      - OPCACHE_MEM_SIZE=128
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
+      - RP_HEADER=strict-origin
+      - UPLOAD_MAX_SIZE=512M
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/TMC-Store/$AppID/mysql
+        target: /var/lib/mysql
+    networks:
+      - nextcloud
+    privileged: false
 
 networks:
-  private_cloud_network:
-    driver: bridge
-
+  nextcloud:
+    name: nextcloud
+    
 x-casaos:
   architectures:
     - amd64
-  main: private-cloud
-  description:
-    en_us: A private cloud platform to store, sync, and share data securely from any device. This solution includes file sync, calendar, contacts, and collaborative tools, hosted on your own server. It integrates with database and caching services and supports SMB client features.
+    - arm
+    - arm64
+  main: nextcloud
+  author: crazy-max
+  category: TMCstore
+  description: 
+    en_us: |
+      Nextcloud Docker image with advanced features. More info can be found here https://github.com/crazy-max/docker-nextcloud.
   tagline:
-    en_us: A secure and powerful private cloud
-  developer: ServaLabs
-  author: ServaLabs
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nextcloud.png
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.jpg
-  screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
+    en_us: The productivity platform that keeps you in control.
+  icon: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/icon.png
+  index: /
+  port_map: ${WEBUI_PORT:-8000}
+  scheme: http
+  tips:
+    custom: |
+      Visit link to finish setup and finetune.
+      https://github.com/mariosemes/CasaOS-TMCstore/tree/main/Apps/nextcloud
+  store_app_id: nextcloud-tmc
   title:
-    en_us: Private Cloud
-  category: Cloud
-  port_map: "7580"
+    en_us: Nextcloud (Extended)
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/screenshot-01.png
+    - https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/screenshot-02.png
+  thumbnail: https://cdn.jsdelivr.net/gh/mariosemes/CasaOS-TMCstore@main/Apps/nextcloud/thumbnail.png
