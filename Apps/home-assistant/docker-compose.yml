@@ -38,5 +38,5 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: Smart Controller
-  category: BigBearCasaOS
+  category: IoT
   port_map: "8123"

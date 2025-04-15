@@ -25,5 +25,5 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: Developer Toolbox
-  category: BigBearCasaOS
+  category: Tools
   port_map: "9888"
