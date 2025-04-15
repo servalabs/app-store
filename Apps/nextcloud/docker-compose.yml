@@ -1,8 +1,8 @@
-name: big-bear-nextcloud-smb
+name: private-cloud
 
 services:
-  big-bear-nextcloud-smb:
-    container_name: big-bear-nextcloud-smb
+  private-cloud:
+    container_name: private-cloud
     image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
     volumes:
       - /files/.apps/$AppID/html:/var/www/html
     environment:
-      - POSTGRES_HOST=big-bear-nextcloud-smb-db
-      - REDIS_HOST=big-bear-nextcloud-smb-redis
+      - POSTGRES_HOST=private-cloud-db
+      - REDIS_HOST=private-cloud-redis
       - POSTGRES_PASSWORD=casaos
       - POSTGRES_USER=casaos
       - POSTGRES_DB=nextcloud
@@ -22,12 +22,12 @@ services:
       - PHP_MEMORY_LIMIT=1024M
       - PHP_UPLOAD_LIMIT=1024M
     depends_on:
-      big-bear-nextcloud-smb-db:
+      private-cloud-db:
         condition: service_healthy
-      big-bear-nextcloud-smb-redis:
+      private-cloud-redis:
         condition: service_healthy
     networks:
-      - big_bear_nextcloud_network
+      - private_cloud_network
     x-casaos:
       volumes:
         - container: /var/www/html
@@ -69,8 +69,8 @@ services:
           description:
             en_us: "Container Port: 7580"
 
-  big-bear-nextcloud-smb-db:
-    container_name: big-bear-nextcloud-smb-db
+  private-cloud-db:
+    container_name: private-cloud-db
     image: postgres:14.2
     restart: unless-stopped
     volumes:
@@ -80,7 +80,7 @@ services:
       - POSTGRES_USER=casaos
       - POSTGRES_DB=nextcloud
     networks:
-      - big_bear_nextcloud_network
+      - private_cloud_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U casaos -d nextcloud"]
       interval: 10s
@@ -102,15 +102,15 @@ services:
           description:
             en_us: Database type
 
-  big-bear-nextcloud-smb-redis:
-    container_name: big-bear-nextcloud-smb-redis
+  private-cloud-redis:
+    container_name: private-cloud-redis
     user: "1000:1000"
     image: redis:6.2.6
     restart: on-failure
     volumes:
       - /files/.apps/$AppID/redis:/data
     networks:
-      - big_bear_nextcloud_network
+      - private_cloud_network
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping || exit 1"]
       interval: 10s
@@ -126,20 +126,20 @@ services:
           description:
             en_us: "Container Port: 6379"
 
-  big-bear-nextcloud-smb-cron:
-    container_name: big-bear-nextcloud-smb-cron
+  private-cloud-cron:
+    container_name: private-cloud-cron
     image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
     restart: on-failure
     volumes:
       - /files/.apps/$AppID/html:/var/www/html
     entrypoint: /cron.sh
     depends_on:
-      big-bear-nextcloud-smb-db:
+      private-cloud-db:
         condition: service_healthy
-      big-bear-nextcloud-smb-redis:
+      private-cloud-redis:
         condition: service_healthy
     networks:
-      - big_bear_nextcloud_network
+      - private_cloud_network
     x-casaos:
       volumes:
         - container: /var/www/html
@@ -147,13 +147,13 @@ services:
             en_us: "Container Path: /var/www/html"
 
 networks:
-  big_bear_nextcloud_network:
+  private_cloud_network:
     driver: bridge
 
 x-casaos:
   architectures:
     - amd64
-  main: big-bear-nextcloud-smb
+  main: private-cloud
   description:
     en_us: A private cloud platform to store, sync, and share data securely from any device. This solution includes file sync, calendar, contacts, and collaborative tools, hosted on your own server. It integrates with database and caching services and supports SMB client features.
   tagline:
