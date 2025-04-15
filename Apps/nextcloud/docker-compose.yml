@@ -1,26 +1,14 @@
-# Configuration for nextcloud-smb setup
-
-# Name of the big-bear-nextcloud-smb application
 name: big-bear-nextcloud-smb
 
-# Service definitions for the big-bear-nextcloud-smb application
 services:
-  # Service name: app
-  # The `app` service definition
   big-bear-nextcloud-smb:
-    # Define the container name
     container_name: big-bear-nextcloud-smb
-    # Use the nextcloud image from the official Docker Hub
     image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
-    # Restart the container unless stopped
     restart: unless-stopped
-    # Map port 7580 on the host to port 80 on the container
     ports:
       - 7580:80
-    # Mount the /DATA/AppData/$AppID/html directory on the host to /var/www/html in the container
     volumes:
-      - /DATA/AppData/$AppID/html:/var/www/html
-    # Set environment variables for the container
+      - /files/.apps/$AppID/html:/var/www/html
     environment:
       - POSTGRES_HOST=big-bear-nextcloud-smb-db
       - REDIS_HOST=big-bear-nextcloud-smb-redis
@@ -33,18 +21,14 @@ services:
       - OVERWRITEPROTOCOL=http
       - PHP_MEMORY_LIMIT=1024M
       - PHP_UPLOAD_LIMIT=1024M
-    # Specify the dependencies
     depends_on:
       big-bear-nextcloud-smb-db:
         condition: service_healthy
       big-bear-nextcloud-smb-redis:
         condition: service_healthy
-
-    # Define the network
     networks:
       - big_bear_nextcloud_network
-
-    x-casaos: # CasaOS specific configuration
+    x-casaos:
       volumes:
         - container: /var/www/html
           description:
@@ -85,27 +69,23 @@ services:
           description:
             en_us: "Container Port: 7580"
 
-  # Define the database container for Nextcloud
   big-bear-nextcloud-smb-db:
     container_name: big-bear-nextcloud-smb-db
     image: postgres:14.2
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/$AppID/pgdata:/var/lib/postgresql/data # Mount the PostgreSQL data directory
+      - /files/.apps/$AppID/pgdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=casaos # Set the PostgreSQL password
-      - POSTGRES_USER=casaos # Set the PostgreSQL username
-      - POSTGRES_DB=nextcloud # Set the name of the Nextcloud database
+      - POSTGRES_PASSWORD=casaos
+      - POSTGRES_USER=casaos
+      - POSTGRES_DB=nextcloud
     networks:
-      - big_bear_nextcloud_network # Connect to the Nextcloud network
-
-    # Healthcheck configuration for the database service
+      - big_bear_nextcloud_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U casaos -d nextcloud"]
       interval: 10s
       timeout: 5s
       retries: 5
-
     x-casaos:
       volumes:
         - container: /var/lib/postgresql/data
@@ -122,25 +102,20 @@ services:
           description:
             en_us: Database type
 
-  # Redis configuration for Nextcloud
-
   big-bear-nextcloud-smb-redis:
     container_name: big-bear-nextcloud-smb-redis
     user: "1000:1000"
     image: redis:6.2.6
     restart: on-failure
     volumes:
-      - "/DATA/AppData/$AppID/redis:/data" # Mount the Redis data directory
+      - /files/.apps/$AppID/redis:/data
     networks:
-      - big_bear_nextcloud_network # Connect to the Nextcloud network
-
-    # Healthcheck configuration for the Redis service
+      - big_bear_nextcloud_network
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
-
     x-casaos:
       volumes:
         - container: /data
@@ -156,57 +131,42 @@ services:
     image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
     restart: on-failure
     volumes:
-      - /DATA/AppData/$AppID/html:/var/www/html
+      - /files/.apps/$AppID/html:/var/www/html
     entrypoint: /cron.sh
-    # Specify the dependencies
     depends_on:
       big-bear-nextcloud-smb-db:
         condition: service_healthy
       big-bear-nextcloud-smb-redis:
         condition: service_healthy
     networks:
-      - big_bear_nextcloud_network # Connect to the Nextcloud network
-
+      - big_bear_nextcloud_network
     x-casaos:
       volumes:
         - container: /var/www/html
           description:
             en_us: "Container Path: /var/www/html"
 
-# Network definition for the big-bear-nextcloud application
 networks:
   big_bear_nextcloud_network:
     driver: bridge
 
-# CasaOS specific configuration
 x-casaos:
-  # Supported CPU architectures for the application
   architectures:
     - amd64
-    - arm64
-  # Main service of the application
   main: big-bear-nextcloud-smb
   description:
-    # Description in English
-    en_us: This is legacy and you should use the BigBearCasaOS Nextcloud instead. Nextcloud puts your data at your fingertips, under your control. Store your documents, calendar, contacts and photos on a server at home, at one of our providers or in a data center you trust.
+    en_us: A private cloud platform to store, sync, and share data securely from any device. This solution includes file sync, calendar, contacts, and collaborative tools, hosted on your own server. It integrates with database and caching services and supports SMB client features.
   tagline:
-    en_us: The productivity platform that keeps you in control
-  # Developer's name or identifier
-  developer: "nextcloud"
-  # Author of this configuration
+    en_us: A secure and powerful private cloud
+  developer: ServaLabs
   author: ServaLabs
-  # Icon for the application
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nextcloud.png
-  # Thumbnail image (currently empty)
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.jpg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
   title:
-    # Title in English
     en_us: Private Cloud
-  # Application category
   category: BigBearCasaOS
-  # Port mapping information
   port_map: "7580"
