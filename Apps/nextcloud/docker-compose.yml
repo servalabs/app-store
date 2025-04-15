@@ -168,5 +168,5 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
   title:
     en_us: Private Cloud
-  category: BigBearCasaOS
+  category: Cloud
   port_map: "7580"

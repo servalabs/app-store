@@ -72,5 +72,5 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: PDF Editor
-  category: BigBearCasaOS
+  category: Utility
   port_map: "8984"

@@ -26,5 +26,5 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: App Builder
-  category: BigBearCasaOS
+  category: Utility
   port_map: "1080"

@@ -12,6 +12,10 @@ services:
       - /files/.apps/$AppID/rabbitmq:/var/lib/rabbitmq
       - /files/.apps/$AppID/redis:/var/lib/redis
       - /files/.apps/$AppID/db:/var/lib/postgresql
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=admin
+      - JWT_HEADER=Authorization
     x-casaos:
       volumes:
         - container: /var/log/onlyoffice
@@ -50,5 +54,5 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: Office Suite
-  category: BigBearCasaOS
+  category: Office
   port_map: "7400"

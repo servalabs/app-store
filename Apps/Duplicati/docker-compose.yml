@@ -47,7 +47,7 @@ x-casaos:
   main: app
   author: ServaLabs
   developer: ServaLabs
-  category: LinuxServer.io
+  category: Backup
   title:
     en_us: Backup Client
   description:

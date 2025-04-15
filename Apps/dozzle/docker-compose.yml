@@ -23,7 +23,7 @@ x-casaos:
   main: app
   author: ServaLabs
   developer: ServaLabs
-  category: BigBearCasaOS
+  category: Maintainance
   title:
     en_us: Log Viewer
   description:
