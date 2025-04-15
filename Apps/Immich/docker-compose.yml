@@ -17,6 +17,7 @@ services:
       - -c
       - wal_compression=on
     container_name: immich-postgress
+    environment:
       - POSTGRES_DB=immich
       - POSTGRES_INITDB_ARGS=--data-checksums
       - POSTGRES_PASSWORD=postgres
