@@ -23,7 +23,7 @@ x-casaos:
   main: app
   author: ServaLabs
   developer: ServaLabs
-  category: BigBearCasaOS
+  category: Home
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png
   thumbnail: ""
   title:

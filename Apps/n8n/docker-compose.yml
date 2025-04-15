@@ -81,7 +81,7 @@ x-casaos:
   thumbnail: ""
   title:
     en_us: Workflow Automation
-  category: BigBearCasaOS
+  category: Automation
   port_map: "5678"
   tips:
     before_install:

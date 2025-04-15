@@ -48,7 +48,7 @@ x-casaos:
   main: app
   author: ServaLabs
   developer: ServaLabs
-  category: LinuxServer.io
+  category: Entertainment
   description:
     en_us: |
       Media Server is a powerful, open-source platform for organizing, managing, and streaming personal media libraries. It allows you to stream your video, music, and TV shows to a variety of devices from your own server. With full cross-platform support and no premium restrictions, it's ideal for home media enthusiasts seeking control and flexibility.
