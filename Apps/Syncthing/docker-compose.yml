@@ -4,9 +4,10 @@ services:
     image: linuxserver/syncthing:latest
     restart: unless-stopped
     environment:
-      PUID: $PUID
-      PGID: $PGID
+      PUID: 0
+      PGID: 0
       TZ: Asia/Kolkata
+      STNOUNPRIV: 1
     x-casaos:
       envs:
         - container: PUID
