@@ -38,13 +38,13 @@ services:
         protocol: udp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/config
+        source: /apps/$AppID/config
         target: /config
       - type: bind
         source: /files/Downloads
         target: /downloads
       - type: bind
-        source: /files/.apps/$AppID/theme
+        source: /apps/$AppID/theme
         target: /theme
 x-casaos:
   architectures:

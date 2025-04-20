@@ -8,7 +8,7 @@ services:
     ports:
       - 7580:80
     volumes:
-      - /files/.apps/$AppID/html:/var/www/html
+      - /apps/$AppID/html:/var/www/html
     environment:
       - POSTGRES_HOST=private-cloud-db
       - REDIS_HOST=private-cloud-redis
@@ -74,7 +74,7 @@ services:
     image: postgres:14.2
     restart: unless-stopped
     volumes:
-      - /files/.apps/$AppID/pgdata:/var/lib/postgresql/data
+      - /apps/$AppID/pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=casaos
       - POSTGRES_USER=casaos
@@ -108,7 +108,7 @@ services:
     image: redis:6.2.6
     restart: on-failure
     volumes:
-      - /files/.apps/$AppID/redis:/data
+      - /apps/$AppID/redis:/data
     networks:
       - private_cloud_network
     healthcheck:
@@ -131,7 +131,7 @@ services:
     image: bigbeartechworld/big-bear-nextcloud-with-smbclient:0.0.7
     restart: on-failure
     volumes:
-      - /files/.apps/$AppID/html:/var/www/html
+      - /apps/$AppID/html:/var/www/html
     entrypoint: /cron.sh
     depends_on:
       private-cloud-db:

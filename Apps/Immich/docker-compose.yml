@@ -70,7 +70,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /files/.apps/immich/model-cache
+        source: /apps/immich/model-cache
         target: /cache
         bind:
           create_host_path: true
@@ -116,7 +116,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /files/.apps/immich/immich
+        source: /apps/immich/immich
         target: /usr/src/app/upload
         bind:
           create_host_path: true
@@ -127,7 +127,7 @@ services:
         bind:
           create_host_path: true
       - type: bind
-        source: /files/30 Media
+        source: /files/30 Gallery
         target: /usr/src/app/upload/library
       - type: bind
         source: /files/.backups

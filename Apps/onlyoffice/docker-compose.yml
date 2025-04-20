@@ -6,12 +6,12 @@ services:
     ports:
       - "7400:80"
     volumes:
-      - /files/.apps/$AppID/logs:/var/log/onlyoffice
-      - /files/.apps/$AppID/data:/var/www/onlyoffice/Data
-      - /files/.apps/$AppID/lib:/var/lib/onlyoffice
-      - /files/.apps/$AppID/rabbitmq:/var/lib/rabbitmq
-      - /files/.apps/$AppID/redis:/var/lib/redis
-      - /files/.apps/$AppID/db:/var/lib/postgresql
+      - /apps/$AppID/logs:/var/log/onlyoffice
+      - /apps/$AppID/data:/var/www/onlyoffice/Data
+      - /apps/$AppID/lib:/var/lib/onlyoffice
+      - /apps/$AppID/rabbitmq:/var/lib/rabbitmq
+      - /apps/$AppID/redis:/var/lib/redis
+      - /apps/$AppID/db:/var/lib/postgresql
     environment:
       - JWT_ENABLED=true
       - JWT_SECRET=admin

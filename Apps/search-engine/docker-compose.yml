@@ -8,7 +8,7 @@ services:
     ports:
       - "4558:8080"
     volumes:
-      - /files/.apps/$AppID/searxng:/etc/searxng
+      - /apps/$AppID/searxng:/etc/searxng
     environment:
       - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
       - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
@@ -49,7 +49,7 @@ services:
     networks:
       - searxng
     volumes:
-      - /files/.apps/$AppID/redis:/data
+      - /apps/$AppID/redis:/data
     cap_drop:
       - ALL
     cap_add:

@@ -5,7 +5,7 @@ services:
     container_name: swingmusic
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/config
+        source: /apps/$AppID/config
         target: /config
       - type: bind
         source: /files/40 Entertainment/43 Music

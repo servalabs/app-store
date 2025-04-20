@@ -34,7 +34,7 @@ services:
         protocol: udp
     volumes:
       - type: bind
-        source: /files/.apps/$AppID/
+        source: /apps/$AppID/
         target: /config
       - type: bind
         source: /files

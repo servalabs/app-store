@@ -14,8 +14,8 @@ services:
       - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
       - LANGS=en_US
     volumes:
-      - /files/.apps/$AppID/tessdata:/usr/share/tessdata
-      - /files/.apps/$AppID/configs:/configs
+      - /apps/$AppID/tessdata:/usr/share/tessdata
+      - /apps/$AppID/configs:/configs
     ports:
       - "8984:8080"
     x-casaos:
