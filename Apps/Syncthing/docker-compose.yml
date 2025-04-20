@@ -38,7 +38,7 @@ services:
       - type: bind
         source: /files
         target: /files
-    container_name: app
+    container_name: syncer
 x-casaos:
   architectures:
     - amd64
